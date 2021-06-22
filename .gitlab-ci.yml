@@ -1,0 +1,15 @@
+image: python:latest
+
+before_script:
+  - python -V  # Print out python version for debugging
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -r requirements.txt
+
+pages:
+  script:
+    - python app.py
+  artifacts:
+    paths:
+      - public
