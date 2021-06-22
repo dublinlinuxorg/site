@@ -2,6 +2,7 @@
 # create a file using the index.html template
 from jinja2 import Environment, FileSystemLoader
 import shutil
+from jinja2.nodes import Output
 import markdown
 import frontmatter
 from pathlib import Path
@@ -41,8 +42,16 @@ def render_markdown(temp_folder, mkd_file):
 if __name__ == '__main__':
 	# load the configuration
 	template_folder = Path(config['template_folder'])
-	output_folder = Path(config['live_folder'])
+	live_folder = Path(config['live_folder'])
+	output_folder = Path(config['output_folder'])
 	markdown_folder = Path(config['md_folder'])
+
+	# delete the build dirs, remake them and the .gitkeeps in them
+	for d in [output_folder, live_folder]:
+		shutil.rmtree(d)
+		d.mkdir()
+		with open(Path(d, '.gitkeep'), 'w') as gk:
+			gk.write('keep me')
 
 	# load Jinja 2
 	file_loader = FileSystemLoader(template_folder)
@@ -67,6 +76,8 @@ if __name__ == '__main__':
 		index_file.write(whole_site)
 	
 	# copy the assests into the public folder
-	src = 'assets'
-	dst = 'public/assets'
-	destination = shutil.copytree(src, dst)  
+	for dd in ['assets', 'images']:
+		src = Path(dd)
+		dst = Path(live_folder, dd)
+		destination = shutil.copytree(src, dst)  
+	shutil.copy(Path(output_folder, 'index.html'), Path(live_folder, 'index.html'))
