@@ -1,6 +1,7 @@
 # collect files in md_files/
 # create a file using the index.html template
 from jinja2 import Environment, FileSystemLoader
+import shutil
 import markdown
 import frontmatter
 from pathlib import Path
@@ -65,4 +66,7 @@ if __name__ == '__main__':
 	with open(Path(output_folder, 'index.html'), 'w') as index_file:
 		index_file.write(whole_site)
 	
-	
+	# copy the assests into the public folder
+	src = 'assets'
+	dst = 'public/assets'
+	destination = shutil.copytree(src, dst)  
