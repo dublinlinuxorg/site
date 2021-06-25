@@ -8,7 +8,6 @@ import logging
 from pathlib import Path
 from config import config
 from jinja2 import Environment, FileSystemLoader
-from jinja2.nodes import Output
 
 
 def get_frontmatter(f):
