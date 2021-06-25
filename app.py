@@ -4,7 +4,6 @@ import shutil
 import os
 import markdown
 import frontmatter
-import logging
 from pathlib import Path
 from config import config
 from jinja2 import Environment, FileSystemLoader
@@ -40,8 +39,6 @@ def render_markdown(temp_folder, mkd_file, environ):
     return {'content': rendered_html, **frontmatter}
 
 def app_run(root_dir):
-    logging.basicConfig(encoding='utf-8', level=logging.INFO)
-    logging.info("regenerating")
     # make sure you are in the correct place, as
     # this fn can get called from anywhere
     os.chdir(root_dir)
@@ -82,6 +79,7 @@ def app_run(root_dir):
         index_file.write(whole_site)
     
     # copy the assests into the public folder
+    # os.chdir(output_folder)
     for dd in ['assets', 'images']:
         src = Path(dd)
         dst = Path(live_folder, dd)

@@ -19,7 +19,7 @@ def serve(conf, root_folder):
         static_root=os.getcwd(), # server from this folder
         # watch these paths for changes
         watch_paths=[Path(root_folder, config['md_folder'])],
-        on_reload=app_run(root_folder), # call this function before reloading
+        on_reload=lambda: app_run(root_folder), # call this function before reloading
         # the browser
         host=url, # the host to bind to
         port=port, # the port to bind to
