@@ -5,8 +5,7 @@ menu_item: Support Us
 template: basic
 order: 3
 ---
-
-If you like what we do and would like to support us, please click on the PayPal button or use the PayPal QR code.
+If you like wat we do and would like to support us, please click on the PayPal button or use the PayPal QR code.
 <div style="text-align:center">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick" />
