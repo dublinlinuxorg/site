@@ -21,6 +21,8 @@ def get_frontmatter(f):
 
 def render_markdown(temp_folder, mkd_file, environ):
     """
+    takes a markdown file, selects the most appropriate partial template
+    and returns the html and the frontmatter metadata
     in: 
     template_folder: the folder where the templates are in (Path, str)
     md_file: markdown file with page content (Path)
@@ -38,7 +40,13 @@ def render_markdown(temp_folder, mkd_file, environ):
     rendered_html = template.render(page={'content': html_string, **frontmatter})
     return {'content': rendered_html, **frontmatter}
 
+
 def app_run(root_dir):
+    """
+    removes everything from build and output dirs 
+    gets every markdown file rendered, and using the renders and the layouts
+    creates the final html files
+    """
     # make sure you are in the correct place, as
     # this fn can get called from anywhere
     os.chdir(root_dir)
