@@ -84,7 +84,10 @@ def app_run(root_dir):
         dst = Path(live_folder, src.name)
         destination = shutil.copytree(src, dst)  
     for f in output_folder.glob("*"):
-        shutil.copy((f), Path(live_folder, f.name))
+        try:
+            shutil.copy((f), Path(live_folder, f.name))
+        except FileNotFoundError:
+            pass
 
 if __name__ == '__main__':
     app_run(os.getcwd())
