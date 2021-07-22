@@ -82,7 +82,10 @@ def app_run(root_dir):
     for dd in [asset_folder, Path(theme_folder, 'css'), Path(theme_folder, 'js')]:
         src = Path(dd)
         dst = Path(live_folder, src.name)
-        destination = shutil.copytree(src, dst)  
+        try:
+            destination = shutil.copytree(src, dst)  
+        except FileNotFoundError:
+            pass
     for f in output_folder.glob("*"):
         try:
             shutil.copy((f), Path(live_folder, f.name))
