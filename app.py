@@ -5,7 +5,7 @@ import os
 import markdown
 import frontmatter
 from pathlib import Path
-from config import config
+from config import config, site_config
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -19,26 +19,14 @@ def get_frontmatter(f):
         return metadata, content
 
 
-def render_markdown(temp_folder, mkd_file, environ):
+def render_markdown(mkd_file):
     """
-    takes a markdown file, selects the most appropriate partial template
-    and returns the html and the frontmatter metadata
-    in: 
-    template_folder: the folder where the templates are in (Path, str)
-    md_file: markdown file with page content (Path)
-
+    for the given markdown file, returns a dict with
+    content as html and frontmatter as nested dict
     """
     frontmatter, mkd_text = get_frontmatter(mkd_file)
     html_string = markdown.markdown(mkd_text)
-    if 'template' in frontmatter.keys() \
-        and Path(temp_folder, f'{frontmatter["template"]}.html').exists():
-        template = environ.get_template(f'{frontmatter["template"]}.html')
-    elif Path(temp_folder, f'{mkd_file.name}.html').exists():
-        template = environ.get_template(f'{mkd_file.name}.html')
-    else:
-        template = environ.get_template('index.html')
-    rendered_html = template.render(page={'content': html_string, **frontmatter})
-    return {'content': rendered_html, **frontmatter}
+    return {'content': html_string, **frontmatter}
 
 
 def app_run(root_dir):
@@ -51,10 +39,12 @@ def app_run(root_dir):
     # this fn can get called from anywhere
     os.chdir(root_dir)
     # load the configuration
+    theme_folder = Path(config['theme_folder'])
     template_folder = Path(config['template_folder'])
     live_folder = Path(config['live_folder'])
     output_folder = Path(config['output_folder'])
     markdown_folder = Path(config['md_folder'])
+    asset_folder = Path(site_config['asset_folder'])
 
     # delete the build dirs, remake them and the .gitkeeps in them
     for d in [output_folder, live_folder]:
@@ -72,27 +62,29 @@ def app_run(root_dir):
     # iterate over the page markdown files
     for md_file in markdown_folder.glob('*.md'):
         # parse the markdown into metadata dict and html
-        page = render_markdown(temp_folder=template_folder,
-            mkd_file=md_file,
-            environ=env)
+        page = render_markdown(mkd_file=md_file)
         # add this to the list 
         pages.append(page)
 
-    # create the big page
-    template = env.get_template('index.html')
-    whole_site = template.render(pages=pages)
+    # create the pages
+    rendered_pages = []
+    for page in pages:
+        template = env.get_template(f'{page["template"]}.html')
+        rendered_page = template.render(page=page,  
+            site_config=site_config)
+        rendered_pages.append(rendered_page)
 
-    # write the page into the index file
-    with open(Path(output_folder, 'index.html'), 'w') as index_file:
-        index_file.write(whole_site)
+        # write each page into the index file
+        with open(Path(output_folder, f'{page["slug"]}.html'), 'w') as index_file:
+            index_file.write(rendered_page)
     
     # copy the assests into the public folder
-    # os.chdir(output_folder)
-    for dd in ['assets', 'images']:
+    for dd in [asset_folder, Path(theme_folder, 'css'), Path(theme_folder, 'js')]:
         src = Path(dd)
-        dst = Path(live_folder, dd)
+        dst = Path(live_folder, src.name)
         destination = shutil.copytree(src, dst)  
-    shutil.copy(Path(output_folder, 'index.html'), Path(live_folder, 'index.html'))
+    for f in output_folder.glob("*"):
+        shutil.copy((f), Path(live_folder, f.name))
 
 if __name__ == '__main__':
     app_run(os.getcwd())

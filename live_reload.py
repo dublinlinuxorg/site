@@ -18,7 +18,10 @@ def serve(conf, root_folder):
     server = HttpWatcherServer(
         static_root=os.getcwd(), # server from this folder
         # watch these paths for changes
-        watch_paths=[Path(root_folder, config['md_folder'])],
+        watch_paths=[Path(root_folder, config['md_folder']),
+            Path(root_folder, config['theme_folder']), 
+            Path(root_folder, config['template_folder']), 
+        ],
         on_reload=lambda: app_run(root_folder), # call this function before reloading
         # the browser
         host=url, # the host to bind to

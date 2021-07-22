@@ -1,6 +1,6 @@
 venv/*
 __pycache__/*
-public/*
-!public/.gitkeep
+live/*
+!live/.gitkeep
 output/*
 !output/.gitkeep
