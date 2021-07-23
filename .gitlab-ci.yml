@@ -13,3 +13,5 @@ pages:
   artifacts:
     paths:
       - live
+  only:
+      - main
