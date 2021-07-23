@@ -2,12 +2,12 @@
 <hmtl>
     <head>
         <meta charset="UTF-8"> 
-        <link rel="stylesheet" href="css/style.css"> <!-- import the css-->
+        <link rel="stylesheet" href="/css/style.css"> <!-- import the css-->
         <title> {% block title %}{% endblock %} </title>
     </head>
     <body>
         <div id="top_bar">
-            <img src="{{ site_config.asset_folder }}/{{ site_config.small_logo }}" width="60px"></img>
+            <img src="/{{ site_config.asset_folder }}/{{ site_config.small_logo }}" width="60px"></img>
         </div>
         {% block content %}
         {% endblock %}

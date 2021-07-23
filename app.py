@@ -60,22 +60,29 @@ def app_run(root_dir):
     # the list of all the pages to display
     pages = []
     # iterate over the page markdown files
-    for md_file in markdown_folder.glob('*.md'):
+    for md_file in markdown_folder.glob('**/*.md'):
         # parse the markdown into metadata dict and html
         page = render_markdown(mkd_file=md_file)
+        menu_item = page['menu_item']
         # add this to the list 
-        pages.append(page)
+    #     pages.append(page)
 
-    # create the pages
-    rendered_pages = []
-    for page in pages:
+    # # create the pages
+    # for page in pages:
         template = env.get_template(f'{page["template"]}.html')
         rendered_page = template.render(page=page,  
             site_config=site_config)
-        rendered_pages.append(rendered_page)
 
         # write each page into the index file
-        with open(Path(output_folder, f'{page["slug"]}.html'), 'w') as index_file:
+        # if it's the site index, write it into the top output folder
+        if md_file == Path(markdown_folder, 'index.md'):
+            index_file_path = Path(output_folder, 'index.html')
+        else:
+            # everything else gets written into it's own folder as
+            # index html, to allow nicer urls
+            index_file_path = Path(output_folder, md_file.parent.relative_to(markdown_folder), page['slug'], 'index.html')
+        index_file_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(index_file_path, 'w') as index_file:
             index_file.write(rendered_page)
     
     # copy the assests into the public folder
@@ -86,9 +93,13 @@ def app_run(root_dir):
             destination = shutil.copytree(src, dst)  
         except FileNotFoundError:
             pass
-    for f in output_folder.glob("*"):
+    for f in output_folder.glob("**/*.html"):
+        # recreate the parent folders in the live dir if needed
+        live_parent_path = Path(live_folder, f.parent.relative_to(output_folder))
+        live_parent_path.mkdir(parents=True, exist_ok=True)
+        # copy the file
         try:
-            shutil.copy((f), Path(live_folder, f.name))
+            shutil.copy((f), Path(live_parent_path, f.name))
         except FileNotFoundError:
             pass
 
