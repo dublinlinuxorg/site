@@ -1,5 +1,5 @@
 # collect files in md_files/
-# create a file using the index.html template
+# create a file using the templates in themes/THEME/templates folder
 import shutil
 import os
 import markdown
