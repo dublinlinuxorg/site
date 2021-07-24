@@ -1,5 +1,7 @@
 # website
 
+- dependencies: sudo dnf install libcanberra-devel libcanberra-gtk3 
+
 - all links to images, js and css need to be absolute in the html and tempates, but relative to the site root in the config:
     - in a template: `<img src="/{site_config.assets_folder}/{site_config.small_logo}">`
     - in markdown: `![dlc full logo](/assets/dl_logo.png?resize=200,200)`

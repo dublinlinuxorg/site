@@ -45,6 +45,7 @@ def app_run(root_dir):
     output_folder = Path(config['output_folder'])
     markdown_folder = Path(config['md_folder'])
     asset_folder = Path(site_config['asset_folder'])
+    site_config['menu'] = {}
 
     # delete the build dirs, remake them and the .gitkeeps in them
     for d in [output_folder, live_folder]:
@@ -57,23 +58,19 @@ def app_run(root_dir):
     file_loader = FileSystemLoader(template_folder)
     env = Environment(loader=file_loader)
 
+    # create a structure for the site config and 
     # the list of all the pages to display
-    pages = []
+    site = {}
+    site['pages'] = []
+    site['site_config'] = site_config
+
     # iterate over the page markdown files
     for md_file in markdown_folder.glob('**/*.md'):
         # parse the markdown into metadata dict and html
         page = render_markdown(mkd_file=md_file)
         menu_item = page['menu_item']
-        # add this to the list 
-    #     pages.append(page)
 
-    # # create the pages
-    # for page in pages:
-        template = env.get_template(f'{page["template"]}.html')
-        rendered_page = template.render(page=page,  
-            site_config=site_config)
-
-        # write each page into the index file
+        # create a file path for each file
         # if it's the site index, write it into the top output folder
         if md_file == Path(markdown_folder, 'index.md'):
             index_file_path = Path(output_folder, 'index.html')
@@ -81,8 +78,27 @@ def app_run(root_dir):
             # everything else gets written into it's own folder as
             # index html, to allow nicer urls
             index_file_path = Path(output_folder, md_file.parent.relative_to(markdown_folder), page['slug'], 'index.html')
+        
+        # add the index file path to the page config
+        page['index_file_path'] = index_file_path
+
+        # add the menu and the link to it to the site config
+        site_config['menu'][menu_item] = index_file_path.parent.relative_to(output_folder)
+
+        # create the directory for the page
         index_file_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(index_file_path, 'w') as index_file:
+
+        # create a page item and add it to the page list 
+        # all the info about pages needs to be collected before any  
+        # page is rendered, this ensures that menus are complete
+        site['pages'].append(page)
+
+    for page in site['pages']:
+        # create the pages
+        template = env.get_template(f'{page["template"]}.html')
+        rendered_page = template.render(page=page,  
+            site_config=site_config)
+        with open(page['index_file_path'], 'w') as index_file:
             index_file.write(rendered_page)
     
     # copy the assests into the public folder

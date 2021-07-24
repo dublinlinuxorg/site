@@ -2,6 +2,10 @@ body {
     background-color: black;
     color: cyan;
 }
+a {
+    color: green;
+    text-decoration: underline overline;
+}
 #top_bar {
     background-color: black;
 }
