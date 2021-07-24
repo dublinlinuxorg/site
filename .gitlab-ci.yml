@@ -12,6 +12,6 @@ pages:
     - python app.py
   artifacts:
     paths:
-      - live
+      - public
   only:
       - main
