@@ -7,6 +7,7 @@ import frontmatter
 from pathlib import Path
 from config import config, site_config
 from jinja2 import Environment, FileSystemLoader
+from copy import deepcopy
 
 
 def get_frontmatter(f):
@@ -81,10 +82,18 @@ def app_run(root_dir):
         
         # add the index file path to the page config
         page['index_file_path'] = index_file_path
+        
+        page_menu_path = menu_item.split('/')
 
-        # add the menu and the link to it to the site config
-        site_config['menu'][menu_item] = index_file_path.parent.relative_to(output_folder)
-
+        def add_menu(site_menu, pm_path, parents, depth):
+            if site_menu.get(pm_path[depth], None) is None:
+                site_menu[pm_path[depth]] = {}
+            depth += 1
+            if depth == len(pm_path):
+                return
+            add_menu(site_menu, pm_path, depth)
+        add_menu(site_config['menu'], page_menu_path, 0)
+        print(site_config['menu'])
         # create the directory for the page
         index_file_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -109,6 +118,8 @@ def app_run(root_dir):
             destination = shutil.copytree(src, dst)  
         except FileNotFoundError:
             pass
+
+    # copy the output folder items into the public folder
     for f in output_folder.glob("**/*.html"):
         # recreate the parent folders in the live dir if needed
         live_parent_path = Path(live_folder, f.parent.relative_to(output_folder))
