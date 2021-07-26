@@ -48,6 +48,7 @@ def app_run(root_dir):
     asset_folder = Path(site_config['asset_folder'])
     site_config['menu'] = {}
 
+
     # delete the build dirs, remake them and the .gitkeeps in them
     for d in [output_folder, live_folder]:
         shutil.rmtree(d)

@@ -6,6 +6,7 @@ class Trie:
         self.root = Node('$', '/', '.')
         self.paths_from_root = ['/']
         self.paths_and_subpaths_from_root = ['/']
+        self.dict_of_all_child_node_names = {}
 
     def walk_all_paths(self, node = None, paths = [], path = ""):
         """
@@ -16,9 +17,12 @@ class Trie:
             self.paths_from_root = []
             self.paths_and_subpaths_from_root = []
             node = self.root
+        elif node.name not in self.dict_of_all_child_node_names.keys():
+            self.dict_of_all_child_node_names[node.name] = node
         if node.children == []:
             self.paths_from_root.append(path)
-            elements = path.split('/')
+            elements = path[1:].split('/') # create a list from the string split by /, but remove the first
+            # / to prevent having an empty element
             for n in range(1, len(elements)):
                 self.paths_and_subpaths_from_root.append('/'.join(elements[0: n+1]))
         for child in node.children:
@@ -30,8 +34,8 @@ class Trie:
     
     def has_path(self: object, path: str, node: object = None, depth: int = 0):
         self.walk_all_paths()
-        self.print_paths()
-        print(self.paths_and_subpaths_from_root)
+        # self.print_paths()
+        # print(self.paths_and_subpaths_from_root)
         if path not in self.paths_and_subpaths_from_root:
             return False
         return True
@@ -55,7 +59,26 @@ class Trie:
     def add_leaf_node_with_path(self, node_name, path, page_url):
         if self.has_path(path):
             print("changing existing node")
-        # TODO: finish
+            node = self.get_node_by_path((path))
+            node.name = node_name
+            node.page_url = page_url
+        else:
+            node = self.root
+            segments = path[1:].split('/') # the first element in a split by '/' on a string starting with
+            # a '/' would be '', that's why we split the string from the second element 
+            for n in range(0, len(segments)):
+                print(segments[0])
+                subpath = '/'.join(segments[0:n+1])
+                if not self.has_path(subpath):
+                    n_name = segments[n]
+                    if n_name in self.dict_of_all_child_node_names.keys():
+                        new_node = self.dict_of_all_child_node_names[n_name]
+                        node._children.append(new_node)
+                    node.add_child(Node(segments[n], subpath))
+                node = node.get_child_by_name(segments[n])
+                if n == len(segments) - 1:
+                    node.name = node_name
+                    node.page_url = page_url
 
 class Node:
     def __init__(self, name, path_from_root, page_url=None):
@@ -79,6 +102,10 @@ class Node:
     @property
     def name(self) -> str:
         return self._name
+
+    @name.setter
+    def name(self, val) -> None:
+        self._name = val
 
     @property
     def children(self) -> List[object]:
@@ -119,18 +146,19 @@ if __name__ == '__main__':
     node2.add_child(node3)
     # node.add_child(node3)
     trie = Trie('t')
+    trie.add_leaf_node_with_path('test8', '/test_node2/test_node5/test_node6/test_node7/test_node8', 'test_node8')   
     trie.root.add_child(node)
     trie.root.add_child(node4)
     # n4 = node.get_child_by_name('test_node2')
     # print(trie.has_path(['test_node', 'test_node7']))
-    # trie.walk_all_paths()
-    # trie.print_paths()
-    print(trie.has_path('/test_node/test_node2/test_node4'))
-    print(trie.get_node_by_path('/test_node4').name)
-    print(trie.get_node_by_path('/test_node/test_node2').name)
-    print(trie.get_node_by_path('/test_node/test_node2/test_node3').name)
-    if trie.get_node_by_path('/test_node/test_node2/test_node4') is None:
-        print('none')
+    trie.walk_all_paths()
+    trie.print_paths()
+    # print(trie.has_path('/test_node/test_node2/test_node4'))
+    # print(trie.get_node_by_path('/test_node4').name)
+    # print(trie.get_node_by_path('/test_node/test_node2').name)
+    # print(trie.get_node_by_path('/test_node/test_node2/test_node3').name)
+    # if trie.get_node_by_path('/test_node/test_node2/test_node4') is None:
+        # print('none')
     # print([n.name for n in node3.children])
     # print(node.name + '->' + ','.join([n.name for n in node.children]))
     # print(node2.name + '->' + ','.join([n.name for n in node2.children]))
