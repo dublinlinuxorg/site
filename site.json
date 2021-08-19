@@ -43,7 +43,7 @@
             "title": "Learn about Linux",
             "relative_url": "learn/free_software",
             "menu_order": 4,
-            "pages": [
+            "sub_pages": [
                 {
                     "id": "learn.free_software",
                     "title": "Free Software",

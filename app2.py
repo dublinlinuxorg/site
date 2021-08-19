@@ -3,11 +3,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List
 
-def md_files_to_pages(pages):
+def empty_list():
+    return []
+
+def md_files_to_pages(pages, page_list):
     for page in pages:
-        print(page.get('md_file', None))
+        page_list.append(Page(**page))
         if page.get('pages', False):
-            md_files_to_pages(page['pages'])
+            md_files_to_pages(page['pages'], page_list)
 
 @dataclass
 class Page:
@@ -15,8 +18,9 @@ class Page:
     title: str
     relative_url: str
     menu_order: float
-    template: str
-    md_file: Path
+    md_file: Path = field(default=None)
+    template: str = field(default="")
+    sub_pages: List[any] = field(default_factory=empty_list)
 
 @dataclass
 class SiteConfig:
@@ -28,10 +32,17 @@ class SiteConfig:
 @dataclass
 class Site:
     site_config: SiteConfig
-    pages: List[Page]
+    pages: List[any] = field(default_factory=empty_list, init=False)
 
 if __name__ == '__main__':
     with open('site.json', 'r') as site_file:
-        site = json.load(site_file)
+        site_json = json.load(site_file)
+        site = Site(SiteConfig(**site_json['site_config']))
+            # SiteConfig(site_json['site_config']),
+            # md_files_to_pages(site_json['pages']) 
+        # )
+
         # print(site)
-    md_files_to_pages(site['pages'])
+    md_files_to_pages(site_json['pages'], site.pages)
+    
+    print(site)
