@@ -9,7 +9,7 @@
         <div id="top_bar">
             <img src="/{{ site_config.asset_folder }}/{{ site_config.small_logo }}" width="60px"></img>
             <ul>
-            {% for item, link in site_config.menu.items() %}
+            {% for item, link in menu.items() %}
                 <li><a href="/{{ link }}">{{ item }}</a></li>
             {% endfor %}
             </ul>
