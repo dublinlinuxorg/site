@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<hmtl>
+<html>
     <head>
         <meta charset="UTF-8"> 
         <link rel="stylesheet" href="/css/style.css"> <!-- import the css-->
@@ -8,11 +8,7 @@
     <body>
         <div id="top_bar">
             <img src="/{{ site_config.asset_folder }}/{{ site_config.small_logo }}" width="60px"></img>
-            <ul>
-            {% for item, link in menu.items() %}
-                <li><a href="/{{ link }}">{{ item }}</a></li>
-            {% endfor %}
-            </ul>
+            {{ menu }}
         </div>
         {% block content %}
         {% endblock %}

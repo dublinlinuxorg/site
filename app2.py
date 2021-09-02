@@ -2,7 +2,9 @@ import json
 from jinja2 import Environment, FileSystemLoader
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Tuple
+
+from jinja2.filters import do_filesizeformat
 
 def empty_list():
     return []
@@ -10,23 +12,15 @@ def empty_list():
 def empty_dict():
     return {}
 
-def page_from_template(page, menu, site_config):
-    # load Jinja 2
-    template = env.get_template(f'{page.template}.html')
-    rendered_page = template.render(page=page, menu=menu, site_config=site_config)
-    with open(page['index_file_path'], 'w') as index_file:
-        index_file.write(rendered_page)
-
-# def md_files_to_pages(pages, page_list):
-
 @dataclass
 class Page:
     id: str
     title: str
     slug: str
-    menu_order: float
+    menu_order: str
     md_file: Path = field(default=None)
-    template: str = field(default="")
+    template: str = field(default=None)
+    no_link: str = field(default=None)
     sub_pages: List[any] = field(default_factory=empty_list)
 
 @dataclass
@@ -35,41 +29,62 @@ class SiteConfig:
     theme: str
     big_logo: str
     small_logo: str
+    template_folder: Path = field(init=False)
+    def __post_init__(self):
+        self.template_folder = Path(app_config.theme_folder, self.theme, 'templates')
 
 @dataclass
 class MenuItem:
     page_id: str
-    order: int = field(init=False)
-    label: str = field(init=False)
-    link: str = field(init=False)
+    label: str 
+    link: str
 
 @dataclass
 class Site:
     site_config: SiteConfig
-    pages: List[Page] = field(default_factory=empty_list, init=False)
-    menu: List[MenuItem] = field(default_factory=empty_list, init=False)
+    menu_html: str = field(default="")
+    env: Environment = field(init=False)
+    file_loader: FileSystemLoader = field(init=False)
+    pages: Dict[str, Page] = field(default_factory=empty_dict, init=False)
 
-    def make_page_list(self, pages, page_list):
+    def __post_init__(self):
+        self.file_loader = FileSystemLoader(self.site_config.template_folder)
+        self.env = Environment(loader=self.file_loader)
+    
+    def make_page_list(self, pages, page_dict):
+        self.menu_html += '<ul>\n'
         for page in pages:
-            page_list.append(Page(**page))
-            if page.get('pages', False):
-                self.make_page_list(page['pages'], page_list)
-        self.pages = page_list
+            self.menu_html += '<li>\n'
+            page_dict[str(page['menu_order'])] = Page(**page)
+            self.menu_html += f'<a href="/{page["slug"]}">{page["title"]}</a>\n'
+            if page.get('sub_pages', False):
+                self.make_page_list(page['sub_pages'], page_dict)
+        self.menu_html += '</li>\n'
+        self.menu_html += '</ul>\n'
+        self.pages = page_dict
 
-    def make_menu(self):
-        for page in self.pages:
-            menu_item = MenuItem(page.id)
-            menu_item.label = page.title
-            menu_item.link = page.slug
-            menu_item.order = page.menu_order
-            self.menu.append(menu_item)
+    def page_from_template(self, page):
+        # load Jinja 2
+        parent_folder = Path(app_config.live_folder, page.slug)
+        parent_folder.mkdir(parents=True, exist_ok=True)
+        if page.template is not None:
+            template = self.env.get_template(f'{page.template}.html')
+            rendered_page = template.render(page=page, menu=self.menu_html, site_config=self.site_config)
+            file_path =  Path(parent_folder, 'index.html')
+            with open(file_path, 'w') as index_file:
+                index_file.write(rendered_page)
+
+    def make_pages(self):
+        for order, page in self.pages.items():
+            # print(page, end='\n')
+            self.page_from_template(page)
 
 @dataclass
 class AppConfig:
-	md_folder: str
-	theme_folder: str
-	live_folder: str
-	output_folder: str
+    md_folder: str
+    theme_folder: str
+    live_folder: str
+    output_folder: str
 
 if __name__ == '__main__':
     # load the application config, like where are different folders
@@ -82,10 +97,8 @@ if __name__ == '__main__':
         site_json = json.load(site_file)
         site = Site(SiteConfig(**site_json['site_config']))
 
-    template_folder = Path(app_config.theme_folder, site.site_config.theme, 'templates')
-    file_loader = FileSystemLoader(template_folder)
-    env = Environment(loader=file_loader)
     site.make_page_list(site_json['pages'], site.pages)
-    site.make_menu()
+    # print(site.menu)
     
-    print(site)
+    site.make_pages()
+    # print(site)

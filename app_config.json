@@ -1,7 +1,7 @@
 
 {
-	"md_folder": "md_files",
-	"theme_folder": "themes",
-	"live_folder": "public", 
-	"output_folder": "output"
+    "md_folder": "md_files",
+    "theme_folder": "themes",
+    "live_folder": "public", 
+    "output_folder": "output"
 }

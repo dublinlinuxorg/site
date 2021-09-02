@@ -17,7 +17,7 @@
         {
             "id": "contact",
             "title": "Contact & Socials",
-            "slug": "/contact",
+            "slug": "contact",
             "menu_order": 1,
             "template": "basic",
             "md_file": "contact.md"
@@ -42,6 +42,7 @@
             "id": "learn",
             "title": "Learn about Linux",
             "slug": "learn/free_software",
+            "no_link": true,
             "menu_order": 4,
             "sub_pages": [
                 {
@@ -62,11 +63,21 @@
                 },
                 {
                     "id": "learn.alternative_cloud_services",
-                    "title": "Links",
+                    "title": "Alternative Cloud Services",
                     "slug": "learn/alernative_cloud_services",
                     "menu_order": 4.2,
                     "template": "basic",
-                    "md_file": "learn_about_linux/alternative_cloud_services.md"
+                    "md_file": "learn_about_linux/alternative_cloud_services.md",
+                    "sub_pages": [
+                        {
+                            "id": "learn.links",
+                            "title": "Links",
+                            "slug": "learn/links",
+                            "menu_order": "4.2.0",
+                            "template": "basic",
+                            "md_file": "learn_about_linux/links.md"
+                        }       
+                    ]
                 }
             ]
         }
