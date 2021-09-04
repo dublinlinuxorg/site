@@ -44,7 +44,7 @@
             "slug": "learn/free_software",
             "no_link": true,
             "menu_order": 4,
-            "sub_pages": [
+            "pages": [
                 {
                     "id": "learn.free_software",
                     "title": "Free Software",
@@ -68,9 +68,9 @@
                     "menu_order": 4.2,
                     "template": "basic",
                     "md_file": "learn_about_linux/alternative_cloud_services.md",
-                    "sub_pages": [
+                    "pages": [
                         {
-                            "id": "learn.links",
+                            "id": "learn.links.2",
                             "title": "Links",
                             "slug": "learn/links",
                             "menu_order": "4.2.0",

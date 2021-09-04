@@ -1,135 +1,176 @@
-# collect files in md_files/
-# create a file using the templates in themes/THEME/templates folder
-import shutil
-import os
-import markdown
-import frontmatter
-from pathlib import Path
-from config import config, site_config
+import json
 from jinja2 import Environment, FileSystemLoader
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import List, Dict, Tuple
+from operator import attrgetter
 from copy import deepcopy
 
+from jinja2.filters import do_filesizeformat
 
-def get_frontmatter(f):
+def empty_list():
+    return []
+
+def empty_dict():
+    return {}
+
+@dataclass
+class Page:
     """
-    in: filename (str, Path)
-    out: parsed frontmatter from the file	
+    Slightly differs from the JSON, includes all fields
+    Where the JSON doesn't have a field, the Page class
+    uses None as the field's value 
     """
-    with open(f, 'r') as fi:
-        metadata, content  = frontmatter.parse(fi.read())
-        return metadata, content
+    id: str
+    title: str
+    slug: str
+    menu_order: str
+    md_file: Path = field(default=None)
+    template: str = field(default=None)
+    no_link: str = field(default=None)
+    pages: List[any] = field(default_factory=empty_list)
 
+@dataclass
+class SiteConfig:
+    title: str
+    theme: str
+    big_logo: str
+    small_logo: str
+    template_folder: Path = field(init=False)
+    def __post_init__(self):
+        self.template_folder = Path(app_config.theme_folder, self.theme, 'templates')
 
-def render_markdown(mkd_file):
-    """
-    for the given markdown file, returns a dict with
-    content as html and frontmatter as nested dict
-    """
-    frontmatter, mkd_text = get_frontmatter(mkd_file)
-    html_string = markdown.markdown(mkd_text)
-    return {'content': html_string, **frontmatter}
+@dataclass
+class MenuItem:
+    page_id: str
+    label: str 
+    link: str
+    pages: List[any] = field(default_factory=empty_list)
 
+@dataclass
+class Site:
+    site_config: SiteConfig
+    simple_menu: str = field(default="")
+    menu: List = field(default_factory=empty_list)
+    env: Environment = field(init=False)
+    file_loader: FileSystemLoader = field(init=False)
+    pages: List[Page] = field(default_factory=empty_list)
 
-def app_run(root_dir):
-    """
-    removes everything from build and output dirs 
-    gets every markdown file rendered, and using the renders and the layouts
-    creates the final html files
-    """
-    # make sure you are in the correct place, as
-    # this fn can get called from anywhere
-    os.chdir(root_dir)
-    # load the configuration
-    theme_folder = Path(config['theme_folder'])
-    template_folder = Path(config['template_folder'])
-    live_folder = Path(config['live_folder'])
-    output_folder = Path(config['output_folder'])
-    markdown_folder = Path(config['md_folder'])
-    asset_folder = Path(site_config['asset_folder'])
-    site_config['menu'] = {}
-
-
-    # delete the build dirs, remake them and the .gitkeeps in them
-    for d in [output_folder, live_folder]:
-        shutil.rmtree(d)
-        d.mkdir()
-        with open(Path(d, '.gitkeep'), 'w') as gk:
-            gk.write('keep me')
-
-    # load Jinja 2
-    file_loader = FileSystemLoader(template_folder)
-    env = Environment(loader=file_loader)
-
-    # create a structure for the site config and 
-    # the list of all the pages to display
-    site = {}
-    site['pages'] = []
-    site['site_config'] = site_config
-
-    # iterate over the page markdown files
-    for md_file in markdown_folder.glob('**/*.md'):
-        # parse the markdown into metadata dict and html
-        page = render_markdown(mkd_file=md_file)
-        menu_item = page['menu_item']
-
-        # create a file path for each file
-        # if it's the site index, write it into the top output folder
-        if md_file == Path(markdown_folder, 'index.md'):
-            index_file_path = Path(output_folder, 'index.html')
-        else:
-            # everything else gets written into it's own folder as
-            # index html, to allow nicer urls
-            index_file_path = Path(output_folder, md_file.parent.relative_to(markdown_folder), page['slug'], 'index.html')
-        
-        # add the index file path to the page config
-        page['index_file_path'] = index_file_path
-        
-        page_menu_path = menu_item.split('/')
-
-        def add_menu(site_menu, pm_path, parents, depth):
-            if site_menu.get(pm_path[depth], None) is None:
-                site_menu[pm_path[depth]] = {}
-            depth += 1
-            if depth == len(pm_path):
-                return
-            add_menu(site_menu, pm_path, depth)
-        add_menu(site_config['menu'], page_menu_path, 0)
-        print(site_config['menu'])
-        # create the directory for the page
-        index_file_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # create a page item and add it to the page list 
-        # all the info about pages needs to be collected before any  
-        # page is rendered, this ensures that menus are complete
-        site['pages'].append(page)
-
-    for page in site['pages']:
-        # create the pages
-        template = env.get_template(f'{page["template"]}.html')
-        rendered_page = template.render(page=page,  
-            site_config=site_config)
-        with open(page['index_file_path'], 'w') as index_file:
-            index_file.write(rendered_page)
+    def __post_init__(self):
+        self.file_loader = FileSystemLoader(self.site_config.template_folder)
+        self.env = Environment(loader=self.file_loader)
     
-    # copy the assests into the public folder
-    for dd in [asset_folder, Path(theme_folder, 'css'), Path(theme_folder, 'js')]:
-        src = Path(dd)
-        dst = Path(live_folder, src.name)
-        try:
-            destination = shutil.copytree(src, dst)  
-        except FileNotFoundError:
-            pass
+    def make_simple_menu(self, pages, indent_counter = 0):
+        """
+        creates a simplified nested menu as a html
+        string from the Site class's pages member
+        the menu items are ordered by each page's .menu_order
+        """
+        indent_string = '  ' * indent_counter
+        self.simple_menu += f'{indent_string}<ul>\n'
+        for page in sorted(pages, key=attrgetter('menu_order'), reverse=False):
+        # for page in pages:
+            self.simple_menu += f'{indent_string}  <li>\n'
+            self.simple_menu += f'{indent_string}    <a href="/{page.slug}">{page.title}</a>\n'
+            if page.pages != []:
+                self.make_simple_menu(page.pages, indent_counter+1)
+        self.simple_menu += f'{indent_string}  </li>\n'
+        self.simple_menu += f'{indent_string}</ul>\n'
 
-    # copy the output folder items into the public folder
-    for f in output_folder.glob("**/*.html"):
-        # recreate the parent folders in the live dir if needed
-        live_parent_path = Path(live_folder, f.parent.relative_to(output_folder))
-        live_parent_path.mkdir(parents=True, exist_ok=True)
-        # copy the file
-        try:
-            shutil.copy((f), Path(live_parent_path, f.name))
-        except FileNotFoundError:
-            pass
+    def make_page_list(self, json_pages, page_list):
+        """
+        recursively traverses the possibly nested JSON's pages array
+        creates a corresponding and if appropriate, nested list of Page classes 
+        """
+        for json_page in json_pages:
+            page = Page(
+                id = json_page['id'],
+                title = json_page['title'],
+                slug = json_page['slug'],
+                menu_order = json_page['menu_order'],
+                md_file = json_page.get('md_file', None),
+                template = json_page.get('template', None),
+                no_link = json_page.get('no_link', None),
+                pages = []
+            )
+            page_list.append(page)
+            if json_page.get('pages', False):
+                # page_list = page_list[page_list.index(page)].pages
+                self.make_page_list(json_page['pages'], page_list[page_list.index(page)].pages)
+        self.pages = page_list
+
+    def make_menu(self, pages, menu_list):
+        """
+        creates a list of menu items and sets the site's
+        menu member to it.
+        this offers more use than the simple menu, but is more
+        difficult to use in the template.
+        """
+        for page in sorted(pages, key=attrgetter('menu_order'), reverse=True):
+            menu_item = MenuItem(
+                page_id = page.id,
+                label = page.title,
+                link = page.slug,
+                # an assignment without deepcopy would cause the
+                # list to be altered in the recursion
+                pages = deepcopy(page.pages)
+            )
+            menu_list.append(menu_item)
+            if menu_item.pages != []:
+                self.make_menu(menu_item.pages, menu_list[menu_list.index(menu_item)].pages)
+        self.menu = menu_list
+
+    def page_from_template(self, page):
+        # load Jinja 2
+        parent_folder = Path(app_config.live_folder, page.slug)
+        parent_folder.mkdir(parents=True, exist_ok=True)
+        if page.template:
+            template = self.env.get_template(f'{page.template}.html')
+            rendered_page = template.render(page=page, menu=self.simple_menu, site_config=self.site_config)
+            file_path =  Path(parent_folder, 'index.html')
+            with open(file_path, 'w') as index_file:
+                index_file.write(rendered_page)
+
+    def make_pages(self, page_list):
+        """
+        iterates over Site.pages and creates a html file for each
+        page that has a tempate 
+        """
+        for page in page_list:
+            # print(page, end='\n')
+            self.page_from_template(page)
+            if page.pages != []:
+                self.make_pages(page.pages)
+
+
+@dataclass
+class AppConfig:
+    md_folder: str
+    theme_folder: str
+    live_folder: str
+    output_folder: str
 
 if __name__ == '__main__':
-    app_run(os.getcwd())
+    # load the application config, like where are different folders
+    with open('app_config.json') as ap_file:
+        ap_json = json.load(ap_file)
+        app_config = AppConfig(**ap_json)
+
+    # load the site config (includes pages definitions)
+    with open('site.json', 'r') as site_file:
+        site_json = json.load(site_file)
+        site = Site(SiteConfig(**site_json['site_config']))
+
+    site.make_page_list(site_json['pages'], [])
+    # s = list(map(print, [f'{p}\n' for p in site.pages]))
+    
+    # print(site.pages)
+
+    site.make_simple_menu(site.pages)
+    # print(site.simple_menu)
+
+    site.make_menu(site.pages, [])
+    # s = list(map(print, [f'{p}\n' for p in site.pages]))
+    site.make_pages(site.pages)
+    print(site.menu)
+    # print(site)
