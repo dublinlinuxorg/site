@@ -1,4 +1,6 @@
 import json
+import markdown
+import shutil as sh
 from jinja2 import Environment, FileSystemLoader
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -6,13 +8,14 @@ from typing import List, Dict, Tuple
 from operator import attrgetter
 from copy import deepcopy
 
-from jinja2.filters import do_filesizeformat
-
 def empty_list():
     return []
 
 def empty_dict():
     return {}
+
+def string_to_path(s):
+    return Path(s)
 
 @dataclass
 class Page:
@@ -70,6 +73,9 @@ class Site:
         self.simple_menu += f'{indent_string}<ul>\n'
         for page in sorted(pages, key=attrgetter('menu_order'), reverse=False):
         # for page in pages:
+            # negative menu_order means don't include in the menu
+            if int(page.menu_order) < 0:
+                continue
             self.simple_menu += f'{indent_string}  <li>\n'
             self.simple_menu += f'{indent_string}    <a href="/{page.slug}">{page.title}</a>\n'
             if page.pages != []:
@@ -107,6 +113,9 @@ class Site:
         difficult to use in the template.
         """
         for page in sorted(pages, key=attrgetter('menu_order'), reverse=True):
+            # negative menu_order means don't include in the menu
+            if int(page.menu_order) < 0:
+                continue
             menu_item = MenuItem(
                 page_id = page.id,
                 label = page.title,
@@ -121,15 +130,46 @@ class Site:
         self.menu = menu_list
 
     def page_from_template(self, page):
-        # load Jinja 2
+        """
+        given the page, it will use its .template to render
+        it as html 
+        """
         parent_folder = Path(app_config.live_folder, page.slug)
         parent_folder.mkdir(parents=True, exist_ok=True)
         if page.template:
+            with open(Path(app_config.md_folder, page.md_file), 'r') as md_file:
+                md_string = md_file.read()
+            html_string = markdown.markdown(md_string)
             template = self.env.get_template(f'{page.template}.html')
-            rendered_page = template.render(page=page, menu=self.simple_menu, site_config=self.site_config)
+            rendered_page = template.render(
+                page = page,
+                html_string = html_string,
+                menu = self.simple_menu,
+                site_config = self.site_config
+            )
             file_path =  Path(parent_folder, 'index.html')
             with open(file_path, 'w') as index_file:
                 index_file.write(rendered_page)
+
+    def clear_live_dir(self):
+        live_folder = Path(app_config.live_folder)
+        # remove everything except the .gitkeep file from the public
+        # directory, so that we can fill it with shiny new things
+        for item in live_folder.glob('[!.]*'):
+            try:
+                sh.rmtree(item)
+            # rmtree only removes directories, unlink only removes files...
+            except NotADirectoryError:
+                item.unlink()
+
+    def copy_assets(self):
+        """
+        copy the asset dir into the public dir
+        """
+        sh.copytree(
+            app_config.asset_folder,
+            Path(app_config.live_folder, app_config.asset_folder.name)
+        )
 
     def make_pages(self, page_list):
         """
@@ -137,18 +177,37 @@ class Site:
         page that has a tempate 
         """
         for page in page_list:
-            # print(page, end='\n')
             self.page_from_template(page)
             if page.pages != []:
                 self.make_pages(page.pages)
-
-
+    
+    def build(self, site_json):
+        """
+        goes through the steps from loading the site json to 
+        generating and copying the files 
+        """
+        self.make_page_list(site_json['pages'], [])
+        self.make_simple_menu(self.pages)
+        self.make_menu(self.pages, [])
+        self.clear_live_dir()
+        self.make_pages(self.pages)
+        self.copy_assets()
+        
 @dataclass
 class AppConfig:
-    md_folder: str
-    theme_folder: str
-    live_folder: str
-    output_folder: str
+    md_folder: Path = field(default_factory=string_to_path)
+    theme_folder: Path = field(default_factory=string_to_path)
+    live_folder: Path = field(default_factory=string_to_path)
+    output_folder: Path = field(default_factory=string_to_path)
+    asset_folder: Path = field(default_factory=string_to_path)
+
+    def __post_init__(self):
+        self.md_folder = Path(self.md_folder)
+        self.theme_folder = Path(self.theme_folder)
+        self.live_folder = Path(self.live_folder)
+        self.output_folder = Path(self.output_folder)
+        self.asset_folder = Path(self.asset_folder)
+
 
 if __name__ == '__main__':
     # load the application config, like where are different folders
@@ -160,17 +219,20 @@ if __name__ == '__main__':
     with open('site.json', 'r') as site_file:
         site_json = json.load(site_file)
         site = Site(SiteConfig(**site_json['site_config']))
-
-    site.make_page_list(site_json['pages'], [])
-    # s = list(map(print, [f'{p}\n' for p in site.pages]))
     
-    # print(site.pages)
+    # build the site
+    site.build(site_json)
 
-    site.make_simple_menu(site.pages)
-    # print(site.simple_menu)
-
-    site.make_menu(site.pages, [])
+    # site.make_page_list(site_json['pages'], [])
     # s = list(map(print, [f'{p}\n' for p in site.pages]))
-    site.make_pages(site.pages)
-    print(site.menu)
+    # print(site.pages)
+    # site.make_simple_menu(site.pages)
+    # print(site.simple_menu)
+    # site.make_menu(site.pages, [])
+    # s = list(map(print, [f'{p}\n' for p in site.pages]))
+    # site.clear_live_dir()
+    # site.make_pages(site.pages)
+    # print(site.menu)
     # print(site)
+    # print(app_config)
+    # site.copy_assets()

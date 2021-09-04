@@ -1,6 +1,7 @@
 
 {
     "md_folder": "md_files",
+    "asset_folder": "assets",
     "theme_folder": "themes",
     "live_folder": "public", 
     "output_folder": "output"
