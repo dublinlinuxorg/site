@@ -223,17 +223,3 @@ if __name__ == '__main__':
     
     # build the site
     site.build(site_json)
-
-    # site.make_page_list(site_json['pages'], [])
-    # s = list(map(print, [f'{p}\n' for p in site.pages]))
-    # print(site.pages)
-    # site.make_simple_menu(site.pages)
-    # print(site.simple_menu)
-    # site.make_menu(site.pages, [])
-    # s = list(map(print, [f'{p}\n' for p in site.pages]))
-    # site.clear_live_dir()
-    # site.make_pages(site.pages)
-    # print(site.menu)
-    # print(site)
-    # print(app_config)
-    # site.copy_assets()
