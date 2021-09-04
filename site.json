@@ -3,7 +3,8 @@
         "title": "Dublin Linux Community",
         "theme": "dublin_linux_classic",
         "big_logo": "logo.png",
-        "small_logo": "small_logo.png"
+        "small_logo": "small_logo.png",
+        "favicon": "d-lug_favicon.ico"
     },
     "pages": [
         {

@@ -39,6 +39,7 @@ class SiteConfig:
     theme: str
     big_logo: str
     small_logo: str
+    favicon: str
     template_folder: Path = field(init=False)
     def __post_init__(self):
         self.template_folder = Path(app_config.theme_folder, self.theme, 'templates')
