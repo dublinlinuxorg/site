@@ -1,0 +1,15 @@
+body {
+    background-color: lightcyan;
+    color: darkblue;
+}
+a {
+    color: blue;
+    text-decoration: underline;
+}
+#top_bar {
+    background-color: lightcyan;
+}
+/* #top_bar_logo {
+    display: block;
+    width: 50px;
+} */

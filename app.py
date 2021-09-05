@@ -171,6 +171,10 @@ class Site:
             app_config.asset_folder,
             Path(app_config.live_folder, app_config.asset_folder.name)
         )
+        sh.copytree(
+            Path(app_config.theme_folder, site.site_config.theme, 'theme_assets'),
+            Path(app_config.live_folder, 'theme_assets')
+        )
 
     def make_pages(self, page_list):
         """
