@@ -1,3 +1,4 @@
+from functools import partial
 import json
 import markdown
 import shutil as sh
@@ -59,6 +60,7 @@ class Site:
     env: Environment = field(init=False)
     file_loader: FileSystemLoader = field(init=False)
     pages: List[Page] = field(default_factory=empty_list)
+    partials: Dict = field(default_factory=empty_dict)
 
     def __post_init__(self):
         self.file_loader = FileSystemLoader(self.site_config.template_folder)
@@ -113,7 +115,7 @@ class Site:
         this offers more use than the simple menu, but is more
         difficult to use in the template.
         """
-        for page in sorted(pages, key=attrgetter('menu_order'), reverse=True):
+        for page in sorted(pages, key=attrgetter('menu_order'), reverse=False):
             # negative menu_order means don't include in the menu
             if int(page.menu_order) < 0:
                 continue
@@ -121,13 +123,13 @@ class Site:
                 page_id = page.id,
                 label = page.title,
                 link = page.slug,
-                # an assignment without deepcopy would cause the
-                # list to be altered in the recursion
-                pages = deepcopy(page.pages)
             )
+            # an assignment without deepcopy would cause the
+            # list to be altered in the recursion
+            sub_pages = deepcopy(page.pages)
             menu_list.append(menu_item)
-            if menu_item.pages != []:
-                self.make_menu(menu_item.pages, menu_list[menu_list.index(menu_item)].pages)
+            if sub_pages != []:
+                self.make_menu(sub_pages, menu_list[menu_list.index(menu_item)].pages)
         self.menu = menu_list
 
     def page_from_template(self, page):
@@ -145,8 +147,10 @@ class Site:
             rendered_page = template.render(
                 page = page,
                 html_string = html_string,
-                menu = self.simple_menu,
-                site_config = self.site_config
+                simple_menu = self.simple_menu,
+                menu = self.menu,
+                site_config = self.site_config,
+                partials = self.partials
             )
             file_path =  Path(parent_folder, 'index.html')
             with open(file_path, 'w') as index_file:
@@ -185,6 +189,17 @@ class Site:
             self.page_from_template(page)
             if page.pages != []:
                 self.make_pages(page.pages)
+
+    def make_partials(self, partials):
+        for partial in partials:
+            with open(Path(app_config.md_folder, partial['md_file']), 'r') as md_file:
+                md_string = md_file.read()
+            html_string = markdown.markdown(md_string)
+            template = self.env.get_template(f'{partial["template"]}.html')
+            rendered_page = template.render(
+                html_string = html_string
+            )
+            self.partials[partial['id']] = rendered_page
     
     def build(self, site_json):
         """
@@ -192,6 +207,7 @@ class Site:
         generating and copying the files 
         """
         self.make_page_list(site_json['pages'], [])
+        self.make_partials(site_json['partials'])
         self.make_simple_menu(self.pages)
         self.make_menu(self.pages, [])
         self.clear_live_dir()

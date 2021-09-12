@@ -2,20 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" type="image/png" href="/assets/{{ site_config.favicon }}"/>
         <link rel="stylesheet" href="/theme_assets/style.css"> <!-- import the css-->
         <title> {% block title %}{% endblock %} </title>
     </head>
     <body>
-        <div id="top_bar">
-            <img src="/assets/{{ site_config.small_logo }}" width="60px"></img>
-            <div class="menu">
-
-                {{ menu }}
-
+        <!-- main page class, centers contents and makes it not too wide -->
+        <div class="page">
+            <div class="header">
+                <a href="/"><img class="logo" src="/assets/{{ site_config.small_logo }}" ></img></a>
+                {% include "menu.html" %}
+                {% block menu %}
+                {% endblock %}
             </div>
+            {% block content %}
+            {% endblock %}
+            {{ partials.footer }}
         </div>
-        {% block content %}
-        {% endblock %}
     </body>
 </html>

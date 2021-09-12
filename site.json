@@ -12,7 +12,7 @@
             "title": "Home",
             "slug": "",
             "menu_order": 0,
-            "template": "basic",
+            "template": "main_page",
             "md_file": "index.md"
         },
         {
@@ -68,7 +68,17 @@
                     "slug": "learn/alternative_cloud_services",
                     "menu_order": 4.2,
                     "template": "basic",
-                    "md_file": "learn_about_linux/alternative_cloud_services.md"
+                    "md_file": "learn_about_linux/alternative_cloud_services.md",
+                    "pages": [
+                        {
+                            "id": "learn.free_software",
+                            "title": "Free Software",
+                            "slug": "learn/free_software",
+                            "menu_order": 4.0,
+                            "template": "basic",
+                            "md_file": "learn_about_linux/free_software.md"
+                        }
+                    ]
                 }
             ]
         },
@@ -95,6 +105,13 @@
             "menu_order": -1,
             "template": "basic",
             "md_file": "donation-cancelled.md"
+        }
+    ],
+    "partials": [
+        {
+            "id": "footer",
+            "template": "footer",
+            "md_file": "footer.md"
         }
 
     ]

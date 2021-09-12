@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+    {% block title %}Dublin Linux | {{ page.title }} {% endblock %}
+    {% block content %}
+    <div class="two_col">
+    {% for item in html_string.split('<hr />') %}
+        <div class="col">
+            {{ item }}
+        </div>
+    {% endfor %}
+    </div>
+    {% endblock %}

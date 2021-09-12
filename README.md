@@ -72,6 +72,9 @@ __everything works, but user experience is a bit barebones__
 
     - the menu_order should reflect the nesting, e.g. if you have a page with order 3 that contains 2 other pages, the 2 inner pages should have the menu order 3.0 and 3.1
 
+- the partials section is for parts of the site for which it makes sense to be declared separately from pages. For example the footer, that has to be under every page, should be declared here. for the partial to work, it has to have the existing md file and jinja template (html file). Its id is important, as that is what other templates are going to call it by - for example, to place the footer on the page, use the following in the template of that page:
+    `{{ partials.footer }}`
+
 #### Theming
 
 - the theme for the site is set in site config in site.json 

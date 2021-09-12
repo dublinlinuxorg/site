@@ -1,15 +1,145 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: lightcyan;
     color: darkblue;
 }
+
+.page {
+    /* not too wide, centered */
+    max-width: 1000px;
+    margin: 50px;
+}
+
 a {
     color: blue;
     text-decoration: underline;
 }
-#top_bar {
-    background-color: lightcyan;
+
+.header {
+    display: grid;
+    grid-template-columns: 10% auto;
+    /* justify-content: start; */
+    align-items: center;
+  }
+
+.header > a > img {
+    max-height: 50px;
 }
-/* #top_bar_logo {
-    display: block;
-    width: 50px;
-} */
+
+.navbar {
+    width: 100%;
+    float: left;
+    display: grid;
+    justify-content: end;
+}
+
+.menu {
+    overflow: hidden;
+    /* align the menu items to the left
+    but keep a gap betwen them */
+    column-gap: 10px;
+    justify-content: end;
+    display: inline-grid;
+    /* keeps the menu items in a single row */
+    grid-auto-flow: column;
+}
+
+.menu-item {
+    background-color:red;
+}
+
+.hamburger {
+    display: none;
+}
+
+.menu-icon-bar {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+}
+
+.submenu {
+    overflow: hidden;
+}
+
+.submenu-contents {
+    /* makes sure that the submenu appears under
+    the original menu entry*/
+    width:max-content;
+    float: left;
+    overflow: hidden;
+    display: none;
+    z-index: 10;
+}
+
+.submenu:hover > .submenu-contents {
+    /* on hover over the submenu class, reveals the child submenu
+    underneath */
+    position: fixed;
+    display: grid;
+}
+
+.two_col {
+    display: grid;
+    column-gap: 10px;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.two_col > .col > p > img {
+    max-width: 100%;
+    height: auto;
+}
+
+.footer {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    grid-auto-flow: column;
+    column-gap: 10px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .menu, .two_col {
+        grid-auto-flow: row;
+    }
+    .hamburger {
+        display: inline;
+    }
+    .menu {
+        display: none;
+        width: auto;
+    }
+
+    .menu-item {
+        width: 150px;
+    }
+
+    .menu:click {
+        display: none;
+    }
+    .navbar:hover > .menu {
+        display: grid;
+        z-index: 10;
+        position: fixed;
+    }
+
+    .submenu:hover {
+        width: 300px;
+    }
+
+    .submenu:hover > .submenu-contents {
+        /* on hover over the submenu class, reveals the child submenu
+        underneath */
+        position: fixed;
+        display: grid;
+        margin-left: 150px;
+        /* top: -10px; */
+    }
+}
