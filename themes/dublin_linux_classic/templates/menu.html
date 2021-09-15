@@ -1,30 +1,35 @@
     {% block menu %}
         <div class="navbar">
-            <div class="hamburger">
-                <div class="menu-icon-bar"></div>
-                <div class="menu-icon-bar"></div>
-                <div class="menu-icon-bar"></div>
-            </div>
-            <div class="menu">
-                    {%- for item in menu recursive %}
-                        {%- if item.pages -%}
-                            {% if loop.depth0 > 0 %}
-                                <div class="submenu" ><button class="menu-item submenu-item">{{ item.label }}</button>
-                            {% else %}
-                                <div class="submenu"><button class="menu-item">{{ item.label }}</button>
-                            {% endif %}
-                                    <div class="submenu-contents">
-                                        {{ loop(item.pages) }}
+            <div class="nav-toggle">
+                <div class="hamburger">
+                    <div class="menu-icon-bar"></div>
+                    <div class="menu-icon-bar"></div>
+                    <div class="menu-icon-bar"></div>
+                </div>
+                <div class="menu-splash"></div>
+                <div class="menu">
+                        {%- for item in menu recursive %}
+                            {%- if item.pages -%}
+                                {% if loop.depth0 > 0 %}
+                                    <div class="submenu" ><div class="menu-item submenu-item"><a href="#">{{ item.label }}</a></div>
+                                {% else %}
+                                    <!-- <div class="submenu-0"> -->
+                                        <div class="submenu"><div class="menu-item"><a href="#">{{ item.label }}</a></div>
+                                {% endif %}
+                                        <div class="submenu-contents">
+                                            {{ loop(item.pages) }}
+                                        </div>
+                                    <!-- </div> -->
                                     </div>
-                                </div>
-                        {%- else -%}
-                            {% if loop.depth0 > 0 %}
-                                <a class="menu-item submenu-item" href="/{{ item.link }}">{{ item.label }}</a>
-                            {% else %}
-                                <a class="menu-item" href="/{{ item.link }}">{{ item.label }}</a>
-                            {% endif %}
-                        {%- endif -%}
-                    {%- endfor %}
+                            {%- else -%}
+                                {% if loop.depth0 > 0 %}
+                                    <a class="menu-item submenu-item" href="/{{ item.link }}">{{ item.label }}</a>
+                                {% else %}
+                                    <a class="menu-item" href="/{{ item.link }}">{{ item.label }}</a>
+                                {% endif %}
+                            {%- endif -%}
+                        {%- endfor %}
+                </div>
             </div>
         </div>
     {% endblock %}

@@ -9,16 +9,18 @@
     </head>
     <body>
         <!-- main page class, centers contents and makes it not too wide -->
-        <div class="page">
-            <div class="header">
+        <div class="header">
+            <div class="header-content">
                 <a href="/"><img class="logo" src="/assets/{{ site_config.small_logo }}" ></img></a>
                 {% include "menu.html" %}
                 {% block menu %}
                 {% endblock %}
             </div>
+        </div>
+        <div class="page">
             {% block content %}
             {% endblock %}
-            {{ partials.footer }}
         </div>
+        {{ partials.footer }}
     </body>
 </html>

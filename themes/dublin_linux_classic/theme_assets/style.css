@@ -3,15 +3,22 @@
 }
 
 body {
-    background-color: lightcyan;
-    color: darkblue;
+    background-color: white;
+    color: black;
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0%;
+    padding: 0%;
 }
 
 .page {
     /* not too wide, centered */
     max-width: 1000px;
-    margin: 50px;
+    margin: auto;
+    padding: 20px;
 }
+
 
 a {
     color: blue;
@@ -19,14 +26,37 @@ a {
 }
 
 .header {
+    position: sticky;
+    top: 0%;
+    min-width: 100%;
+    background-color: black;
+    color: white;
+}
+
+.menu-item > a {
+    color: lightgray;
+    text-decoration: none;
+}
+
+.menu-item > a:hover {
+    color: white;
+}
+
+.header-content {
+    /* not too wide, centered */
     display: grid;
     grid-template-columns: 10% auto;
-    /* justify-content: start; */
     align-items: center;
-  }
+    position: relative;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
 
-.header > a > img {
+.header-content > a > img {
     max-height: 50px;
+    padding: 0;
 }
 
 .navbar {
@@ -47,8 +77,20 @@ a {
     grid-auto-flow: column;
 }
 
+.menu-splash {
+    display: none;
+    background-color: black;
+}
+
 .menu-item {
-    background-color:red;
+    color: lightgray;
+    text-decoration: none;
+    padding: 5px
+}
+
+
+.menu-item:hover {
+    color: white;
 }
 
 .hamburger {
@@ -62,18 +104,33 @@ a {
     margin: 6px 0;
 }
 
+.submenu-0 {
+    /* min-width: 160px; */
+    display: flex;
+    /* position: fixed; */
+    /* background-color: red; */
+    overflow: auto;
+    height: max-content;
+
+}
 .submenu {
     overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
 }
 
 .submenu-contents {
     /* makes sure that the submenu appears under
     the original menu entry*/
-    width:max-content;
+    /* width:max-content; */
+    /* width: 100%; */
+    background-color: black;
     float: left;
     overflow: hidden;
     display: none;
     z-index: 10;
+    /* padding: 5px; */
 }
 
 .submenu:hover > .submenu-contents {
@@ -81,6 +138,14 @@ a {
     underneath */
     position: fixed;
     display: grid;
+}
+
+.submenu:hover > .submenu-contents {
+    /* on hover over the submenu class, reveals the child submenu
+    underneath */
+    padding: 0px;
+    width: 150px;
+    border: 5px solid black;
 }
 
 .two_col {
@@ -102,44 +167,119 @@ a {
     justify-items: center;
     grid-auto-flow: column;
     column-gap: 10px;
+    background-color: lightgray;
+    position: sticky;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 10px;
 }
 
 
 @media only screen and (max-width: 768px) {
-    .menu, .two_col {
+    .page {
+        margin: 10px;
+    }
+
+    .header-content {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .navbar {
+        height: 100%;
+        align-content: space-around;
+    }
+
+    .nav-toggle {
+        min-height: 100%;
+        display: flex;
+        margin: auto;
+        
+        /* position: absolute; */
+    }
+
+    .nav-toggle:hover > .menu-splash {
+        position: fixed;
+        top: 55px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: 2;
+        display: block;
+        opacity: 0.9;
+    }
+
+    .two_col {
         grid-auto-flow: row;
     }
+
     .hamburger {
         display: inline;
+        z-index: 5;
     }
+
+    .menu-icon-bar {
+        background-color: white;
+    }
+
     .menu {
+        z-index: 3;
         display: none;
-        width: auto;
-    }
-
-    .menu-item {
-        width: 150px;
-    }
-
-    .menu:click {
-        display: none;
-    }
-    .navbar:hover > .menu {
-        display: grid;
-        z-index: 10;
+        grid-auto-flow: row;
         position: fixed;
+        top: 100px;
+        font-size: 20px;
+        padding-left: 30px;
     }
 
-    .submenu:hover {
-        width: 300px;
+    .submenu {
+        z-index: 3;
+        grid-auto-flow: row;
+        display: grid;
+        left: 0%;
+        right: 0%;
+        background-color: transparent;
+    }
+
+    .menu-item, .submenu-item {
+        z-index: 3;
+        display: block;
+        text-align: left;
+        position: relative;
+        left: 0%;
+        right: 0%;
+        /* background-color: black; */
+        background-color: transparent;
+    }
+
+    .nav-toggle:hover > .menu {
+        background-color: transparent;
+        justify-content:stretch;
+        left: 0%;
+        right: 0%;
+        display: grid;
+        grid-auto-flow: row;
+        position: fixed;
     }
 
     .submenu:hover > .submenu-contents {
         /* on hover over the submenu class, reveals the child submenu
         underneath */
-        position: fixed;
+        float: none;
+        left: 0%;
+        right: 0%;
         display: grid;
-        margin-left: 150px;
-        /* top: -10px; */
+        position: relative;
+        justify-content:stretch;
+        grid-auto-flow: row;
+        padding-left: 50px;
+        width: 100%;
+        background-color: transparent;
+        border: none;
     }
 }
