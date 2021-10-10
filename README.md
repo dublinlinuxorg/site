@@ -50,6 +50,16 @@ __everything works, but user experience is a bit barebones__
 
 - Add, commit and push to GitLab. After a while (~ 3 minutes), if the GitLab CICD pipelines passed, the website will be deployed at https://test.dublinlinux.org/
 
+#### Live website
+... is forked at https://gitlab.com/dublinlinux/website-live
+the workflow for publishing live is:
+1. push to this repo, let it build, check how it looks at test.dublinlinux.org
+2. clone (if you haven't already) git@gitlab.com:dublinlinux/website-live.git 
+3. if you haven't already, set the upstream of website-live to this repo:
+    `git remote add upstream git@gitlab.com:dublin-linux/website.git`
+4. do pull, add, commit, push
+5. after it builds, check dublinlinux.org if everything is ok
+
 ### Customizing
 #### Application Code
 - The application is simple. It loads the site configuration from site.json and the app configuration from app_config.json and it crates data classes from these. It creates 2 menus ( a simple, html ready for use in the templates, and a more comprehensive pythonic dict, that needs to be parsed by a logic in the template), it renders the markdown as html using Jinja2 templates and it moves everything to the `public` folder (this is mandated by GitLab pages as the folder for www content.)
