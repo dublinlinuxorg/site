@@ -57,8 +57,10 @@ the workflow for publishing live is:
 2. clone (if you haven't already) git@gitlab.com:dublinlinux/website-live.git 
 3. if you haven't already, set the upstream of website-live to this repo:
     `git remote add upstream git@gitlab.com:dublin-linux/website.git`
-4. do pull, add, commit, push
-5. after it builds, check dublinlinux.org if everything is ok
+4. `git fetch upstream`
+5. `git merge upstream/main`
+6. `git push`
+7. after it builds, check dublinlinux.org if everything is ok
 
 ### Customizing
 #### Application Code
