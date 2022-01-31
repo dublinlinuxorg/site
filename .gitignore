@@ -5,3 +5,5 @@ public/*
 output/*
 !output/.gitkeep
 target/*
+assets/*
+!assets/.gitkeep
