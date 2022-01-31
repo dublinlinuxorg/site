@@ -73,12 +73,28 @@
             ]
         },
         {
-            "id": "chat",
-            "title": "Chat",
-            "slug": "chat",
+            "id": "matrix",
+            "title": "Matrix",
+            "slug": "matrix",
             "menu_order": -1,
             "template": "blank",
-            "md_file": "chat.md"
+            "md_file": "matrix.md"
+        },
+        {
+            "id": "matrix",
+            "title": "Matrix",
+            "slug": "matrix",
+            "menu_order": -1,
+            "template": "blank",
+            "md_file": "matrix.md"
+        },
+        {
+            "id": "discord",
+            "title": "Discord",
+            "slug": "discord",
+            "menu_order": -1,
+            "template": "blank",
+            "md_file": "discord.md"
         },
         {
             "id": "thank_you",
