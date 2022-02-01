@@ -1,6 +1,8 @@
     {% block menu %}
         <div class="navbar">
-            <div class="nav-toggle">
+          ## uggly Safari hack with onclick=""
+          ## https://stackoverflow.com/questions/35187970/css-hover-not-working-on-ios-safari-and-chrome
+            <div class="nav-toggle" onclick="">
                 <div class="hamburger">
                     <div class="menu-icon-bar"></div>
                     <div class="menu-icon-bar"></div>
@@ -11,7 +13,7 @@
                         {%- for item in menu recursive %}
                             {%- if item.pages -%}
                                 {% if loop.depth0 > 0 %}
-                                    <div class="submenu" ><div class="menu-item submenu-item"><a href="#">{{ item.label }}</a></div>
+                                    <div class="submenu" onclick=""><div class="menu-item submenu-item" onclick=""><a  onclick="" href="#">{{ item.label }}</a></div>
                                 {% else %}
                                     <!-- <div class="submenu-0"> -->
                                         <div class="submenu"><div class="menu-item"><a href="#">{{ item.label }}</a></div>
