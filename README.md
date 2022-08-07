@@ -96,3 +96,5 @@ the workflow for publishing live is:
 - all theme-wide assets (images, JS, CSS, ...) need to be in /themes/theme_name/theme_assets . The theme_assets folder is moved to the public folder on build
 
 - /themes/theme_name/templates contains Jinja2 templates. Each page has one template file (set in site.json), multiple pages can share one template file and template files can include one another. For example, the redirect (subreddit, chat) pages use "blank" that just displays the pages contents. Other pages use the "basic" template that adds some menus and includes the boilerplate from the "base" template.
+
+-- editing README  to keep the project live on GitLab
