@@ -7,3 +7,4 @@ output/*
 target/*
 assets/*
 !assets/.gitkeep
+.idea
