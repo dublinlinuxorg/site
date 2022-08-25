@@ -2,7 +2,7 @@
 
 * [Meetup Page](https://www.meetup.com/Dublin-Linux-Community?target=_blank)
 * [Telegram](../telegram)
-* [Matrix](../matrix)
+* [Matrix space](../matrix) (if the link doesn't work for you, please [try this one](../matrix-room) for the single room only)
 * [Discord](../discord)
 * [Twitter](https://twitter.com/dublinlinux?target=_blank)
 * Email: info@
