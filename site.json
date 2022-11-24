@@ -81,20 +81,20 @@
             "md_file": "matrix.md"
         },
         {
+            "id": "matrix-room",
+            "title": "Matrix",
+            "slug": "matrix-room",
+            "menu_order": -1,
+            "template": "blank",
+            "md_file": "matrix-room.md"
+        },
+        {
             "id": "telegram",
             "title": "Telegram",
             "slug": "telegram",
             "menu_order": -1,
             "template": "blank",
             "md_file": "telegram.md"
-        },
-        {
-            "id": "discord",
-            "title": "Discord",
-            "slug": "discord",
-            "menu_order": -1,
-            "template": "blank",
-            "md_file": "discord.md"
         },
         {
             "id": "thank_you",
