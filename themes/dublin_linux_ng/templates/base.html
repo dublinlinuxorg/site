@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" /> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="/assets/{{ site_config.favicon }}"/>
+        <link rel="stylesheet" href="/theme_assets/style.css"> <!-- import the css-->
+        <title> {% block title %}{% endblock %} </title>
+    </head>
+    <body>
+        <!-- main page class, centers contents and makes it not too wide -->
+        <div class="header">
+            <div class="header-content">
+                <a href="/"><img class="logo" src="/assets/{{ site_config.small_logo }}" ></img></a>
+                {% include "menu.html" %}
+                {% block menu %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="page">
+            {% block content %}
+            {% endblock %}
+        </div>
+        {{ partials.footer }}
+    </body>
+</html>

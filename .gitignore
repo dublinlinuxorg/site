@@ -5,6 +5,6 @@ public/*
 output/*
 !output/.gitkeep
 target/*
-assets/*
 !assets/.gitkeep
 .idea
+.DS_Store

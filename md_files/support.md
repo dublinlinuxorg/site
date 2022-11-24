@@ -1,6 +1,8 @@
-If you like what we do and would like to support us, please click on the PayPal button or use the PayPal QR code.
 
-<div style="text-align:center">
+<div style="text-align:center; margin: auto">
+If you like what we do and would like to support us, please click on the PayPal button or use the PayPal QR code.
+<br>
+<br>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick" />
 <input type="hidden" name="hosted_button_id" value="6RV2CGVJPYJDN" />
@@ -9,7 +11,7 @@ If you like what we do and would like to support us, please click on the PayPal 
 </form>
 </div>
 
----
+[//]: # (---)
 <div style="text-align:center">
-<img src="https://dublinlinux.org/user/pages/06.support/dl_supportQRCode.png" alt="dl support qr code - scan to donate">
+<img src="/assets/pp_qrcode.png" style="max-height: 150px" alt="dl support qr code - scan to donate">
 </div>

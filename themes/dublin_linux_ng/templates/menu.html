@@ -1,0 +1,37 @@
+    {% block menu %}
+        <div class="navbar">
+          {# uggly Safari hack with onclick="" #}
+          {# https://stackoverflow.com/questions/35187970/css-hover-not-working-on-ios-safari-and-chrome #}
+            <div class="nav-toggle" onclick="">
+                <div class="hamburger">
+                    <div class="menu-icon-bar"></div>
+                    <div class="menu-icon-bar"></div>
+                    <div class="menu-icon-bar"></div>
+                </div>
+                <div class="menu-splash"></div>
+                <div class="menu">
+                        {%- for item in menu recursive %}
+                            {%- if item.pages -%}
+                                {% if loop.depth0 > 0 %}
+                                    <div class="submenu" onclick=""><div class="menu-item submenu-item" onclick=""><a  onclick="" href="#">{{ item.label }}</a></div>
+                                {% else %}
+                                    <!-- <div class="submenu-0"> -->
+                                        <div class="submenu"><div class="menu-item"><a href="#">{{ item.label }}</a></div>
+                                {% endif %}
+                                        <div class="submenu-contents">
+                                            {{ loop(item.pages) }}
+                                        </div>
+                                    <!-- </div> -->
+                                    </div>
+                            {%- else -%}
+                                {% if loop.depth0 > 0 %}
+                                    <a class="menu-item submenu-item" href="/{{ item.link }}">{{ item.label }}</a>
+                                {% else %}
+                                    <a class="menu-item" href="/{{ item.link }}">{{ item.label }}</a>
+                                {% endif %}
+                            {%- endif -%}
+                        {%- endfor %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
