@@ -97,14 +97,6 @@
             "md_file": "telegram.md"
         },
         {
-            "id": "discord",
-            "title": "Discord",
-            "slug": "discord",
-            "menu_order": -1,
-            "template": "blank",
-            "md_file": "discord.md"
-        },
-        {
             "id": "thank_you",
             "title": "Thank you!",
             "slug": "thank-you",
