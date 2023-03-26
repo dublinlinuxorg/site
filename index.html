@@ -23,6 +23,25 @@
     <script src="https://api.gezel.io/js/tailwind_config.js"></script>
     <!--This is @tommerty's tailwind config that I host externally for my own sites. Can make this attached if/should we require.-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        const url="https://next_meetups-1-x7325434.deta.app/event";
+        fetch(url)
+            .then((response) => {
+                if (response.ok) {
+                return response.json();
+                } else {
+                throw new Error("NETWORK RESPONSE ERROR");
+                }
+            })
+            .then(data => {
+                console.log(data);
+                document.getElementById("next_meetup_event_title").innerHTML = data.title;
+                document.getElementById("next_meetup_event_time").innerHTML = data.datetime;
+                document.getElementById("next_meetup_event_location").innerHTML = data.location;
+                document.getElementById("next_meetup_event_link").innerHTML = data.link;
+            })
+            .catch((error) => console.error("FETCH ERROR:", error));
+    </script>
 </head>
 
 <body>
@@ -114,6 +133,13 @@
         </div>
         <div>
             <h1 class="font-black text-white text-3xl pt-4">Attend a Meetup</h1>
+            <div id="next_meetup_event">
+                <h1>Next Meetup Event</h1>
+                <div id="next_meetup_event_title"></div>
+                <div id="next_meetup_event_time"></div>
+                <div id="next_meetup_event_location"></div>
+                <div id="next_meetup_event_link"></div>
+            </div>
             <p>//embed for meetup.com will appear here. Need someone to provide me with a meetup.com embed code//</p>
         </div>
     </div>
