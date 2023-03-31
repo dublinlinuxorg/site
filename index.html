@@ -35,8 +35,8 @@
             })
             .then(data => {
                 console.log(data);
-                data.events.forEach(element => {
-                    event = "";
+                data.events.forEach(function(element, counter) {
+                    event = "<div id='next_meetup_event_" + counter;
                     event += "<div id ='next_meetup_event_title'>" + element.title + "</div>";
                     event += "<div id ='next_meetup_event_time'>" + element.datetime + "</div>";
                     event += "<div id ='next_meetup_event_location'>" + element.location + "</div>";
