@@ -24,23 +24,26 @@
     <!--This is @tommerty's tailwind config that I host externally for my own sites. Can make this attached if/should we require.-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
-        const url="https://next_meetups-1-x7325434.deta.app/events/amount/2";
+        const url = "https://next_meetups-1-x7325434.deta.app/events/amount/2";
         fetch(url)
             .then((response) => {
                 if (response.ok) {
-                return response.json();
+                    return response.json();
                 } else {
-                throw new Error("NETWORK RESPONSE ERROR");
+                    throw new Error("NETWORK RESPONSE ERROR");
                 }
             })
             .then(data => {
                 console.log(data);
-                data.events.forEach(function(element, counter) {
-                    event = "<div id='next_meetup_event_" + counter;
-                    event += "<div id ='next_meetup_event_title'>" + element.title + "</div>";
-                    event += "<div id ='next_meetup_event_time'>" + element.datetime + "</div>";
-                    event += "<div id ='next_meetup_event_location'>" + element.location + "</div>";
-                    event += "<div id ='next_meetup_event_link'>" + element.link + "</div>";
+                data.events.forEach(function (element, counter) {
+                    event = "<div class='bg-gray1 py-2' id='next_meetup_event_" + counter + "'>";
+                    event += "<div class='divider'></div>";
+                    event += "<div class='text-2xl text-white font-bold'>" + element.title + "</div>";
+                    event += "<div>" + element.datetime + "</div>";
+                    event += "<div>" + element.location + "</div>";
+                    event += "<button class='bg-[#568757] hover:bg-[#48684c] text-white font-bold text-2xl px-2 rounded-lg' onclick=\"window.open('" + element.link + "', '_blank')\">RSVP</button>";
+                    event += "<div class='divider'></div>";
+                    event += "</div>";
                     document.getElementById("meetups").innerHTML += event;
                 });
             })
@@ -138,10 +141,9 @@
         <div>
             <h1 class="font-black text-white text-3xl pt-4">Attend a Meetup</h1>
             <div id="next_meetup_event">
-                <h1>Next Meetup Event</h1>
-                <div id="meetups"></div>
+                <h1 class="text-white text-xl">Upcoming Events</h1>
+                <div id="meetups" class=""></div>
             </div>
-            <p>//embed for meetup.com will appear here. Need someone to provide me with a meetup.com embed code//</p>
         </div>
     </div>
     <div id="support" class="text-center pt-4 mb-10 bg-white">
