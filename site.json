@@ -1,9 +1,9 @@
 {
     "site_config": {
         "title": "Dublin Linux Community",
-        "theme": "dublin_linux_ng",
-        "big_logo": "dl_logo_with_white_url.png",
-        "small_logo": "dl_logo_with_white_url.png",
+        "theme": "dublin_linux_classic",
+        "big_logo": "logo.png",
+        "small_logo": "small_logo.png",
         "favicon": "d-lug_favicon.ico"
     },
     "pages": [
