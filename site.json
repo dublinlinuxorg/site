@@ -89,6 +89,14 @@
             "md_file": "matrix-room.md"
         },
         {
+            "id": "matrix-cork",
+            "title": "Matrix Cork Chat",
+            "slug": "matrix-cork",
+            "menu_order": -1,
+            "template": "blank",
+            "md_file": "matrix-cork.md"
+        },
+        {
             "id": "telegram",
             "title": "Telegram",
             "slug": "telegram",
