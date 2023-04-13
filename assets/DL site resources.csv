@@ -1,0 +1,119 @@
+Category,Subcategory,CategoryNote,Name,Web,Wikipedia,Note
+Open Source Software,Office Suites,"Free and Open Source software (FOSS) that works on Linux (may also have builds for other platforms but aren’t guaranteed. Check the Wikipedia article and/or website if unsure). Many of these would be available in the official software repositories of your distribution, the links are provided for your information and research.",LibreOffice,https://www.libreoffice.org/,https://en.wikipedia.org/wiki/LibreOffice,
+Open Source Software,Office Suites,,OnlyOffice,https://www.onlyoffice.com/,https://en.wikipedia.org/wiki/OnlyOffice,
+Open Source Software,Web Browsers,,Mozilla Firefox,https://www.mozilla.org/en-GB/firefox/new/,https://en.wikipedia.org/wiki/Firefox,
+Open Source Software,Web Browsers,,Chromium,https://www.chromium.org/Home,https://en.wikipedia.org/wiki/Chromium_(web_browser),
+Open Source Software,Web Browsers,,Midori,https://astian.org/en/midori-browser/,https://en.wikipedia.org/wiki/Midori_(web_browser),
+Open Source Software,Web Browsers,,Falkon,https://www.falkon.org/,https://en.wikipedia.org/wiki/Falkon,
+Open Source Software,Web Browsers,,Gnome Web,https://wiki.gnome.org/Apps/Web,https://en.wikipedia.org/wiki/GNOME_Web,
+Open Source Software,Email Clients,,Thunderbird,https://www.thunderbird.net/en-US/,https://en.wikipedia.org/wiki/Mozilla_Thunderbird,
+Open Source Software,Email Clients,,Geary,https://wiki.gnome.org/Apps/Geary,https://en.wikipedia.org/wiki/Geary_(e-mail_client),
+Open Source Software,Email Clients,,Evolution,https://wiki.gnome.org/Apps/Evolution,https://en.wikipedia.org/wiki/GNOME_Evolution,
+Open Source Software,Chat Clients,,Pidgin,https://pidgin.im/,https://en.wikipedia.org/wiki/Pidgin_(software),Connects to various protocols
+Open Source Software,Chat Clients,,Signal,https://signal.org/,https://en.wikipedia.org/wiki/Signal_(software),
+Open Source Software,Chat Clients,,Telegram,https://en.wikipedia.org/wiki/Telegram_(software),https://en.wikipedia.org/wiki/Telegram_(software),Server side isn’t Open Source
+Open Source Software,Chat Clients,,Wire,https://wire.com/en/,https://en.wikipedia.org/wiki/Wire_(software),Server side isn’t Open Source
+Open Source Software,Chat Clients,,Mattermost,https://mattermost.com,https://en.wikipedia.org/wiki/Mattermost,Project chat designed for technical teams
+Open Source Software,Chat Clients,,Matrix,https://matrix.org/,https://en.wikipedia.org/wiki/Matrix_(protocol),
+Open Source Software,Video Calling,,Jitsi,https://jitsi.org/,https://en.wikipedia.org/wiki/Jitsi,
+Open Source Software,Video Calling,,VDO Ninja,https://vdo.ninja/,,
+Open Source Software,Video Calling,,Nextcloud Talk,https://nextcloud.com/talk/,,
+Open Source Software,Photo Editors,,digiKam,https://www.digikam.org/,https://en.wikipedia.org/wiki/DigiKam,
+Open Source Software,Photo Editors,,darktable,https://www.darktable.org/,https://en.wikipedia.org/wiki/Darktable,
+Open Source Software,Image Editing ,,GIMP,https://www.gimp.org/,https://en.wikipedia.org/wiki/GIMP,
+Open Source Software,Vector Editing,,Inkscape,https://inkscape.org/,https://en.wikipedia.org/wiki/Inkscape,
+Open Source Software,Drawing and Painting,,Krita,https://krita.org/en/,https://en.wikipedia.org/wiki/Krita,
+Open Source Software,3D Graphics,,Blender,https://www.blender.org/,https://en.wikipedia.org/wiki/Blender_(software),
+Open Source Software,Media Players,,VLC,https://www.videolan.org/vlc/,https://en.wikipedia.org/wiki/VLC_media_player,
+Open Source Software,Media Players,,mpv,https://mpv.io/,https://en.wikipedia.org/wiki/Mpv_(media_player),
+Open Source Software,Media Organisers,,Elisa,https://invent.kde.org/multimedia/elisa,,
+Open Source Software,Media Organisers,,Clementine,https://www.clementine-player.org/,https://en.wikipedia.org/wiki/Clementine_(software),
+Open Source Software,Media Organisers,,Rhythmbox,https://wiki.gnome.org/Apps/Rhythmbox,https://en.wikipedia.org/wiki/Rhythmbox,
+Open Source Software,Media Organisers,,Audacious,https://audacious-media-player.org/,https://en.wikipedia.org/wiki/Audacious_(software),
+Open Source Software,Media Organisers,,Banshee,http://banshee.fm/,https://en.wikipedia.org/wiki/Banshee_(media_player),Not updated in a while but still works
+Open Source Software,Audio Recording and Editing,,Audacity,https://www.audacityteam.org/,https://en.wikipedia.org/wiki/Audacity_(audio_editor),
+Open Source Software,Audio Recording and Editing,,Ardour,https://ardour.org/,https://en.wikipedia.org/wiki/Ardour_(software),For advanced use
+Open Source Software,Audio Recording and Editing,,Gnome Sound Recorder,https://wiki.gnome.org/Apps/SoundRecorder,,"Basic, recording only"
+Open Source Software,Video Editing,,Kdelive,https://kdenlive.org/en/,https://en.wikipedia.org/wiki/Kdenlive,
+Open Source Software,Video Editing,,OpenShot,https://www.openshot.org/,https://en.wikipedia.org/wiki/OpenShot,
+Open Source Software,DJ Mixing and Playback,,Mixxx,https://mixxx.org/,https://en.wikipedia.org/wiki/Mixxx,
+Open Source Software,Audio Streaming,,spotify-qt,https://github.com/kraxarn/spotify-qt,,Open source unofficial Spotify client
+Open Source Software,"Video Streaming, Recording and Broadcasting",,OBS Studio,https://obsproject.com/,https://en.wikipedia.org/wiki/OBS_Studio,
+Open Source Software,"Video Streaming, Recording and Broadcasting",,Downcast,https://owncast.online/,,
+Open Source Software,Torrent Clients,,Transmission,https://transmissionbt.com/,https://en.wikipedia.org/wiki/Transmission_(BitTorrent_client),
+Open Source Software,Torrent Clients,,qBittorrent,https://www.qbittorrent.org/,https://en.wikipedia.org/wiki/QBittorrent,
+Open Source Software,Torrent Clients,,Deluge,https://deluge-torrent.org,https://en.wikipedia.org/wiki/Deluge_(software),
+Open Source Software,Developer Tools,,VS Codium,https://vscodium.com/,,
+Open Source Software,Developer Tools,,IntelliJ Idea Community Edition,https://www.jetbrains.com/idea/download/,https://en.wikipedia.org/wiki/IntelliJ_IDEA,
+Open Source Software,Developer Tools,,KDevelop,https://kdevelop.org/,https://en.wikipedia.org/wiki/KDevelop,
+Open Source Software,Developer Tools,,JupyterLab,https://jupyter.org/,https://en.wikipedia.org/wiki/Project_Jupyter,
+Open Source Software,Developer Tools,,Vim,https://www.vim.org/,https://en.wikipedia.org/wiki/Vim_(text_editor),
+Open Source Software,Developer Tools,,Emacs,https://www.gnu.org/software/emacs/,https://en.wikipedia.org/wiki/Emacs,
+Open Source Software,Developer Tools,,Godot,https://godotengine.org/,https://en.wikipedia.org/wiki/Godot_(game_engine),
+Links,Text Media,,OMG Ubuntu!,https://www.omgubuntu.co.uk/,,
+Links,Text Media,,Opensource.com,https://opensource.com/,,Funded by Red hat so slightly biased towards that
+Links,Text Media,,Linux.com,https://www.linux.com/,,From the Linux Foundation
+Links,Text Media,,It’s FOSS,https://itsfoss.com/,,
+Links,Text Media,,Fossbytes,https://fossbytes.com/,,
+Links,Text Media,,Phoronix,https://www.phoronix.com/,,
+Links,Text Media,,Hacker News,https://news.ycombinator.com/,,
+Links,YouTube Channels,,QuidsUp,https://www.youtube.com/user/quidsup,,
+Links,YouTube Channels,,Jupiter Broadcasting,https://www.youtube.com/user/jupiterbroadcasting,,
+Links,YouTube Channels,,The Linux Experiment,https://www.youtube.com/@TheLinuxEXP,,
+Links,YouTube Channels,,Level1Linux,https://www.youtube.com/channel/UCOWcZ6Wicl-1N34H0zZe38w,,
+Links,YouTube Channels,,Infinitely Galactic,https://www.youtube.com/@InfinitelyGalactic,,
+Links,YouTube Channels,,Gardiner Bryant,https://www.youtube.com/user/tuxreviews/videos,,
+Links,YouTube Channels,,Chris Were,https://www.youtube.com/@ChrisWereDigital/videos,,
+Links,YouTube Channels,,tutoriaLinux,https://www.youtube.com/@tutoriaLinux/,,
+Links,Podcasts,,Linux Lads,https://linuxlads.com/,,Loosely affiliated with our Linux Community
+Links,Podcasts,,Jupiter Broadcasting,https://www.jupiterbroadcasting.com/,,"For Linux Unplugged, Self-Hosted, Linux Action News and Coder Radio"
+Links,Podcasts,,Late Night Linux,https://latenightlinux.com/,,
+Links,Podcasts,,Linux Downtime,https://linuxdowntime.com/,,
+Links,Podcasts,,Linux After Dark,https://linuxafterdark.net/,,
+Links,Podcasts,,2.5 Admins,https://2.5admins.com/,,
+Links,Podcasts,,Bad Voltage,https://www.badvoltage.org/,,
+Links,Podcasts,,Destination LInux Network,https://destinationlinux.network/,,"For Destination Linux, Hardware Addicts, This Week in Linux and DLN Xtend"
+Links,Gaming on Linux,,Steam,https://store.steampowered.com/,,"Probably the most supported platform, a lot of DRM games"
+Links,Gaming on Linux,,protondb,https://www.protondb.com/,,List of Windows games working on Linux under project Proton
+Links,Gaming on Linux,,GOG,https://www.gog.com/,,"DRM free, good Linux selection and quite a bit of old Windows games that run very well under Wine"
+Links,Gaming on Linux,,itch.io,https://itch.io/,,"open, indie gaming platform"
+Links,Gaming on Linux,,Humble Bundle,https://www.humblebundle.com/,,"Used to be really good, now occasionally good, has good DRM free support, now is owned by IGN"
+Links,Advice & Learning,,Arch Wiki,https://wiki.archlinux.org/,,"A very good resource even for other distributions, can be quite technical at times"
+Links,Advice & Learning,,Ubuntu Forums,https://ubuntuforums.org/,,
+Links,Advice & Learning,,Ask Ubuntu,https://askubuntu.com/,,
+Links,Advice & Learning,,Stack Overflow,https://stackoverflow.com/,,
+Links,Activism & Donations,,EDRI,https://edri.org/take-action/donate/,,European Digital Rights
+Links,Activism & Donations,,FSFE,https://my.fsfe.org/donate,,
+Links,Activism & Donations,,Digital Rights Ireland,https://digitalrights.ie,,
+Links,Activism & Donations,,EFF,https://supporters.eff.org/donate/join-eff-m--m,,
+Links,Activism & Donations,,Open Rights Group,https://action.openrightsgroup.org/make-one-donation,,EFF’s sister organisation in the UK
+Links,Activism & Donations,,Mozilla Foundation,https://foundation.mozilla.org/en/,,
+Links,Activism & Donations,,Apache Foundation,https://www.apache.org/foundation/contributing.html,,
+Links,Activism & Donations,,VideoLAN,https://www.videolan.org/contribute.html,,"VLC mainly, but they do a lot of codec development too"
+Alternative Cloud Services,Search Engines,,DuckDuckGo,https://duckduckgo.com/,,
+Alternative Cloud Services,Search Engines,,Qwant,https://www.qwant.com/,,
+Alternative Cloud Services,Search Engines,,StartPage,https://www.startpage.com/,,
+Alternative Cloud Services,Search Engines,,SearX,https://searx.thegpm.org/,,
+Alternative Cloud Services,Email,,Protonmail,https://proton.me/mail,,
+Alternative Cloud Services,Email,,Kolab,https://kolabnow.com/,,
+Alternative Cloud Services,Email,,Startmail,https://www.startmail.com/,,
+Alternative Cloud Services,Email,,Fastmail,https://www.fastmail.com/,,
+Alternative Cloud Services,Email,,Posteo,https://posteo.de/en,,
+Alternative Cloud Services,Email,,Lavabit,https://lavabit.com/,,
+Alternative Cloud Services,Email,,Tutanota,https://tutanota.com/,,
+Alternative Cloud Services,Email,,Migadu,https://www.migadu.com/,,
+Alternative Cloud Services,Maps,,OpenStreetMap,https://www.openstreetmap.org/,,
+Alternative Cloud Services,Maps,,OpenStreetMap Ireland,https://www.openstreetmap.ie,,
+Alternative Cloud Services,Maps,,Here We Go,https://wego.here.com/,,
+Alternative Cloud Services,Cloud Storage,,Nextcloud,https://nextcloud.com/,,
+Alternative Cloud Services,Cloud Storage,,pCloud,https://www.pcloud.com/eu,,
+Alternative Cloud Services,Cloud Storage,,SpiderOak,https://spideroak.com,,
+Alternative Cloud Services,Cloud Storage,,Seafile,https://www.seafile.com/en/home/,,
+Projects for Smartphones,Mobile OS,,LineageOS,https://lineageos.org/,,
+Projects for Smartphones,Mobile OS,,Sailfish,https://sailfishos.org/,,
+Projects for Smartphones,Mobile OS,,UBports,https://ubports.com/,,
+Projects for Smartphones,Mobile OS,,Replicant,https://www.replicant.us/,,
+Projects for Smartphones,Mobile OS,,Librem,https://puri.sm/shop/librem-5/,,
+Projects for Smartphones,Mobile OS,,Plasma Mobile,https://plasma-mobile.org/,,
+Projects for Smartphones,Mobile OS,,GrapheneOS,https://grapheneos.org/,,
+Projects for Smartphones,Application Store,,F-Droid,https://f-droid.org/,,
