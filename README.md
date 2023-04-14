@@ -9,3 +9,4 @@ This repository is designated for the [Dublin Linux website](https://dublinlinux
 Feel free to contribute to the site, submit any issues you may find, or anything else.
 
 If you want to get more involved in the development of the site, please consider joining our [Matrix channel](https://matrix.to/#/!lfSGseSPnQWsUaYZda:matrix.org?via=matrix.org&via=matrix.dublinlinux.org)
+  
