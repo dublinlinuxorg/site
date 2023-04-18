@@ -1,0 +1,125 @@
+<html class="bg-gray2">
+
+<head>
+        <title>
+                Dublin Linux | Resources
+        </title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <meta property="og:author" content="" />
+        <link rel="icon" type="image/x-icon" href="https://dublinlinuxorg.github.io/site//assets/small_logo.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.22.0/dist/full.css" rel="stylesheet" type="text/css">
+        <script src="https://kit.fontawesome.com/e311482788.js" crossorigin="anonymous"></script>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.1/tailwind.min.css'>
+        <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'
+                rel='stylesheet'>
+        <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <script src="https://api.gezel.io/js/tailwind_config.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+        <!-- nav -->
+
+        <nav class="fixed top-0 w-full bg-gray2 px-2 md:px-4 py-2.5">
+                <div class="container flex flex-wrap items-center justify-between mx-auto">
+                        <a href="https://dublinlinux.org" class="flex items-center">
+                                <img src="https://dublinlinuxorg.github.io/site//assets/small_logo.png"
+                                        class="h-6 mr-3 md:h-9" alt="Logo" />
+                                <span
+                                        class="self-center text-xl font-semibold text-white whitespace-nowrap">DublinLinux.org</span>
+                        </a>
+                        <button data-collapse-toggle="navbar-default" type="button"
+                                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden"
+                                aria-controls="navbar-default" aria-expanded="false">
+                                <span class="sr-only">Open main menu</span>
+                                <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                                <ul
+                                        class="flex flex-col p-4 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
+                                        <li>
+                                                <a href="https://dublinlinuxorg.github.io/site//"
+                                                        class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] text-white md:p-0"
+                                                        aria-current="page">Home</a>
+                                        </li>
+                                        <li>
+                                                <a href="https://dublinlinuxorg.github.io/site//#socials"
+                                                        class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72]  md:border-0 text-white md:p-0">Socials</a>
+                                        </li>
+                                        <li>
+                                                <a href="https://dublinlinuxorg.github.io/site//#support"
+                                                        class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] md:border-0 text-white md:p-0">Support
+                                                        Us</a>
+                                        </li>
+                                        <li>
+                                                <a href="https://dublinlinuxorg.github.io/site//resources.html"
+                                                        class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] md:border-0 text-white md:p-0">Learn
+                                                        About Linux</a>
+                                        </li>
+                                </ul>
+                        </div>
+                </div>
+        </nav>
+
+        <!-- nav end -->
+        <div id="" class="mt-2 pt-24">
+                <h1 class="text-center font-black text-white text-3xl">Resources</h1>
+                <div class="container bg-[#6fae72] rounded-xl mx-auto pt-6">
+                        <p class="text-white font-black text-2xl pt- mx-9">Index</p>
+                        <nav class="pb-1 mx-9 text-white font-bold">
+                                <nav class="mb-8">
+                                        <ul class="list-none">
+                                                {% for category in template_data.keys()%}
+                                                <li class="mb-2 font-bold"><a href="#{{ category|replace(" ", "") }}" class="hover:underline"><i class="fas fa-link mr-1"></i>{{ category }}</a>
+                                                        <ul class="list-none ml-4">
+                                                        {% for subcategory in template_data[category].keys() %}
+                                                                <li class="mb-1">
+                                                                        <a href="#{{ subcategory|replace(" ", "") }}" class="hover:underline" style="font-weight: normal;"><i class="fas fa-link mr-1"></i>{{ subcategory }}</a>
+                                                                </li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                </li>
+                                                {% endfor %}
+                                        </ul>
+                                </nav>
+                        </nav>
+                </div>
+        </div>
+
+
+        {% for category in template_data.keys() %}
+        <div id="{{ category|replace(" ", "") }}" class="mx-24 text-white">
+                <h1 class="font-bold text-4xl underline pt-24">{{ category }}</h1>
+                {% if category_notes.get(category, False) %}
+                <p><em>{{ category_notes[category] }}</em></p>
+                {% endif %}
+                {% for subcategory in template_data[category].keys() %}
+                <div id="{{ subcategory|replace(" ", "") }}">
+                        <!-- 2x br so that the subcategory heading is visible when anchor is clicked -->
+                        <br>
+                        <br>
+                        <h2 class="pt-9 font-bold text-2xl" >{{ subcategory }}</h2>
+                        <ul>
+                        {% for item in template_data[category][subcategory].keys() %}
+                                {% if template_data[category][subcategory][item].get("wikipedia", False) %}
+                                <li>{{ item }} <a class="underline text-[#6fae72] hover:text-gray-200" href="{{ template_data[category][subcategory][item]["web"]}}">website</a>, <a class="underline text-[#6fae72] hover:text-gray-200" href="{{ template_data[category][subcategory][item]["wikipedia"] }}">Wikipedia</a>
+                                {% else %}
+                                <li>{{ item }} <a class="underline text-[#6fae72] hover:text-gray-200" href="{{ template_data[category][subcategory][item]["web"]}}">website</a>
+                                {% endif %}
+                                </li>
+                        {% endfor %}
+                        </ul>
+                </div>
+                {% endfor %}
+        </div>
+        {% endfor %}
+</body>
+</html>
