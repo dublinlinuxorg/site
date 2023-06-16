@@ -27,7 +27,7 @@
             "id": "subreddit",
             "title": "Subreddit",
             "slug": "subreddit",
-            "menu_order": 2,
+            "menu_order": -1,
             "template": "blank",
             "md_file": "subreddit.md"
         },
