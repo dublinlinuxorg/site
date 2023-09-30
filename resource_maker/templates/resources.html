@@ -1,0 +1,136 @@
+<html class="bg-gray2">
+<!--<html>-->
+<head>
+  <title>
+    Dublin Linux | Resources
+  </title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <meta property="og:author" content="" />
+  <link rel="icon" type="image/x-icon" href="assets/small_logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.22.0/dist/full.css" rel="stylesheet" type="text/css">
+  <script src="https://kit.fontawesome.com/e311482788.js" crossorigin="anonymous"></script>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.1/tailwind.min.css'>
+  <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'
+        rel='stylesheet'>
+  <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script src="https://api.gezel.io/js/tailwind_config.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+<div class="mx-auto max-w-screen-lg p-3">
+<!-- nav -->
+
+<!--<nav class="fixed top-0 w-full bg-gray2 px-2 md:px-4 py-2.5">-->
+<nav class="sticky top-0 w-full bg-gray2">
+  <div class="container flex flex-wrap items-center justify-between mx-auto">
+    <a href="/" class="flex items-center">
+      <img src="/assets/small_logo.png"
+           class="h-6 mr-3 md:h-9" alt="Logo" />
+      <span
+              class="self-center text-xl font-semibold text-white whitespace-nowrap">DublinLinux.org</span>
+    </a>
+    <button data-collapse-toggle="navbar-default" type="button"
+            class="inline-flex items-center p-2 ml-3 text-sm text-white rounded-lg md:hidden"
+            aria-controls="navbar-default" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul
+              class="flex flex-col p-4 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
+        <li>
+          <a href="/"
+             class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] text-white md:p-0"
+             aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="/#socials"
+             class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72]  md:border-0 text-white md:p-0">Socials</a>
+        </li>
+        <li>
+          <a href="/#support"
+             class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] md:border-0 text-white md:p-0">Support
+            Us</a>
+        </li>
+        <li>
+          <a href="/resources.html"
+             class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] md:border-0 text-white md:p-0">Learn
+            About Linux</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- nav end -->
+<!--<div class="fixed bottom-0 overflow-y-scroll px-2 md:px-4 py-2.5">-->
+<div>
+<div id="resources" class="mt-2 pt-4">
+  <h1 class="text-center font-black text-white pb-5 text-3xl">Resources</h1>
+  <div class="container bg-[#6fae72] rounded-xl mx-auto pt-6">
+    <p class="text-white font-black text-2xl pt- mx-9">Index</p>
+      <div id="resource-accordion text-white" data-active-classes="text-green-700 bg-[#6fae72]" data-inactive-classes="text-white bg-[#6fae72]" data-accordion="collapse">
+<!--      <nav class="pb-1 mx-9 text-white font-bold">-->
+            {% for category in template_data.keys()%}
+              <button type="button" class="flex bg-[#6fae72] focus:bg-[#6fae72]  items-center text-white active:text-white focus:text-white justify-between w-full pl-5 pb-3 font-bold text-left" data-accordion-target="#resource-accordion-collapse-body-{{ category|replace(" ", "") }}" aria-expanded="false" aria-controls="resource-accordion-collapse-body-{{ category | replace(" ", "")}}">
+                <span class="pl-6 text-lg">{{ category }}</span>
+              </button>
+              <div id="resource-accordion-collapse-body-{{ category|replace(" ", "")}}" class="hidden" aria-labelledby="resource-accordion-collapse-body-{{ category|replace(" ", "") }}">
+                <div class="bg-green-700 p-5">
+                  <ul class="list-none ml-4">
+                    {% for subcategory in template_data[category].keys() %}
+                      <li class="mb-1">
+                        <a href="#{{ subcategory|replace(" ", "") }}" class="hover:underline font-normal text-white"><i class="fas fa-link mr-1"></i>{{ subcategory }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            {% endfor %}
+              </div>
+<!--          </ul>-->
+<!--      </nav>-->
+      </div>
+  </div>
+
+
+  {% for category in template_data.keys() %}
+    <br>
+  <div class="container flex flex-wrap  justify-between mx-auto">
+    <div id="{{ category|replace(" ", "") }}" class="max-w-screen-lg mx-4 text-white">
+      <h1 class="font-bold text-4xl underline pt-4 pb-4">{{ category }}</h1>
+      {% if category_notes.get(category, False) %}
+        <p><em>{{ category_notes[category] }}</em></p>
+      {% endif %}
+      {% for subcategory in template_data[category].keys() %}
+        <div id="{{ subcategory|replace(" ", "") }}">
+          <!-- 2x br so that the subcategory heading is visible when anchor is clicked -->
+          <h2 class="pt-4 font-bold text-2xl" >{{ subcategory }}</h2>
+          <ul>
+             {% for item in template_data[category][subcategory].keys() %}
+               {% if template_data[category][subcategory][item].get("wikipedia", False) %}
+                 <li>{{ item }} <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["web"]}}">website</a>, <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["wikipedia"] }}">Wikipedia</a> <a href="#resources"><i class="fa-solid fa-arrow-up"></i></a>
+               {% else %}
+                 <li>{{ item }} <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["web"]}}">website</a> <a href="#resources"><i class="fa-solid fa-arrow-up"></i></a>
+               {% endif %}
+               </li>
+             {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+</body>
+</html>
