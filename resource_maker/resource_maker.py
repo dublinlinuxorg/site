@@ -2,8 +2,10 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from collections import defaultdict
 import csv
 import json
+import os
 
 if __name__ == '__main__':
+    os.chdir('resource_maker')
     # prepare Jinja
     env = Environment(
         loader=PackageLoader("resource_maker"),
@@ -37,5 +39,5 @@ if __name__ == '__main__':
 
 
     # write into the file
-    with open('resources.html', 'w') as html_file:
+    with open('../public/resources.html', 'w') as html_file:
         html_file.write(template.render(template_data=template_data, category_notes=category_notes))
