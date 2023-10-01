@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
   <meta name="author" content="">
   <meta property="og:author" content="" />
-  <link rel="icon" type="image/x-icon" href="assets/small_logo.png">
+  <link rel="icon" type="image/x-icon" href="site/assets/small_logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@2.22.0/dist/full.css" rel="stylesheet" type="text/css">
   <script src="https://kit.fontawesome.com/e311482788.js" crossorigin="anonymous"></script>
@@ -32,8 +32,8 @@
 <!--<nav class="fixed top-0 w-full bg-gray2 px-2 md:px-4 py-2.5">-->
 <nav class="sticky top-0 w-full bg-gray2">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
-    <a href="/" class="flex items-center">
-      <img src="/assets/small_logo.png"
+    <a href="site/" class="flex items-center">
+      <img src="site//assets/small_logo.png"
            class="h-6 mr-3 md:h-9" alt="Logo" />
       <span
               class="self-center text-xl font-semibold text-white whitespace-nowrap">DublinLinux.org</span>
@@ -48,21 +48,21 @@
       <ul
               class="flex flex-col p-4 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
         <li>
-          <a href="/"
+          <a href="site/"
              class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] text-white md:p-0"
              aria-current="page">Home</a>
         </li>
         <li>
-          <a href="/#socials"
+          <a href="site/#socials"
              class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72]  md:border-0 text-white md:p-0">Socials</a>
         </li>
         <li>
-          <a href="/#support"
+          <a href="site/#support"
              class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] md:border-0 text-white md:p-0">Support
             Us</a>
         </li>
         <li>
-          <a href="/resources.html"
+          <a href="site/resources.html"
              class="block py-2 pl-3 pr-4 text-white rounded hover:text-[#6fae72] md:border-0 text-white md:p-0">Learn
             About Linux</a>
         </li>
@@ -81,7 +81,7 @@
       <div id="resource-accordion text-white" data-active-classes="text-green-700 bg-[#6fae72]" data-inactive-classes="text-white bg-[#6fae72]" data-accordion="collapse">
 <!--      <nav class="pb-1 mx-9 text-white font-bold">-->
             {% for category in template_data.keys()%}
-              <button type="button" class="flex bg-[#6fae72] focus:bg-[#6fae72]  items-center text-white active:text-white focus:text-white justify-between w-full pl-5 pb-3 font-bold text-left" data-accordion-target="#resource-accordion-collapse-body-{{ category|replace(" ", "") }}" aria-expanded="false" aria-controls="resource-accordion-collapse-body-{{ category | replace(" ", "")}}">
+              <button type="button" class="flex bg-[#6fae72] focus:bg-[#6fae72]  items-center text-white active:text-white focus:text-white justify-between w-full pl-5 pb-3 font-bold text-left" data-accordion-target="site/#resource-accordion-collapse-body-{{ category|replace(" ", "") }}" aria-expanded="false" aria-controls="resource-accordion-collapse-body-{{ category | replace(" ", "")}}">
                 <span class="pl-6 text-lg">{{ category }}</span>
               </button>
               <div id="resource-accordion-collapse-body-{{ category|replace(" ", "")}}" class="hidden" aria-labelledby="resource-accordion-collapse-body-{{ category|replace(" ", "") }}">
@@ -89,7 +89,7 @@
                   <ul class="list-none ml-4">
                     {% for subcategory in template_data[category].keys() %}
                       <li class="mb-1">
-                        <a href="#{{ subcategory|replace(" ", "") }}" class="hover:underline font-normal text-white"><i class="fas fa-link mr-1"></i>{{ subcategory }}</a>
+                        <a href="site/#{{ subcategory|replace(" ", "") }}" class="hover:underline font-normal text-white"><i class="fas fa-link mr-1"></i>{{ subcategory }}</a>
                       </li>
                     {% endfor %}
                   </ul>
@@ -118,9 +118,9 @@
           <ul>
              {% for item in template_data[category][subcategory].keys() %}
                {% if template_data[category][subcategory][item].get("wikipedia", False) %}
-                 <li>{{ item }} <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["web"]}}">website</a>, <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["wikipedia"] }}">Wikipedia</a> <a href="#resources"><i class="fa-solid fa-arrow-up"></i></a>
+                 <li>{{ item }} <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["web"]}}">website</a>, <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["wikipedia"] }}">Wikipedia</a> <a href="site/#resources"><i class="fa-solid fa-arrow-up"></i></a>
                {% else %}
-                 <li>{{ item }} <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["web"]}}">website</a> <a href="#resources"><i class="fa-solid fa-arrow-up"></i></a>
+                 <li>{{ item }} <a class="underline text-[#6fae72] hover:text-white" href="{{ template_data[category][subcategory][item]["web"]}}">website</a> <a href="site/#resources"><i class="fa-solid fa-arrow-up"></i></a>
                {% endif %}
                </li>
              {% endfor %}
