@@ -9,7 +9,7 @@ before_script:
 
 pages:
   script:
-    - python resource_maker/app.py
+    - python resource_maker/resource_maker.py
   artifacts:
     paths:
       - public
