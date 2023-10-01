@@ -18,3 +18,15 @@ If you want to get more involved in the development of the site, please consider
 - GitLab's CICD runs the resource_maker script during deployment.
 - CICD is configured by the `.gitlab-ci.yml` file
  
+### Live website
+... is forked at https://gitlab.com/dublinlinux/website-live
+the workflow for publishing live is:
+
+- push to this repo, let it build, check how it looks at test.dublinlinux.org
+- clone (if you haven't already) `git@gitlab.com:dublinlinux/website-live.git`
+- if you haven't already, set the upstream of website-live to this repo:
+    - `git remote add upstream git@gitlab.com:dublin-linux/website.git`
+- git fetch upstream
+- `git merge upstream/main`
+- `git push`
+- after it builds, check dublinlinux.org if everything is ok
