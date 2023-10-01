@@ -1,0 +1,16 @@
+image: python:latest
+
+before_script:
+  - python -V  # Print out python version for debugging
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -r resource_maker/requirements.txt
+
+pages:
+  script:
+    - python resource_maker/resource_maker.py
+  artifacts:
+    paths:
+      - public
+
